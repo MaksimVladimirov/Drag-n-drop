@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import TrashIcon from "../icons/TrashIcon";
-// import { Id, Task } from "../types";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Id, Task } from "@/widgets/types";
@@ -102,7 +100,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
         {task.content}
       </p>
-
+{/* 
       {mouseIsOver && (
         <button
           onClick={() => {
@@ -112,7 +110,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
         >
           <TrashIcon />
         </button>
-      )}
+      )} */}
     </div>
   );
 }

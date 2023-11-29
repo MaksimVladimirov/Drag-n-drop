@@ -13,8 +13,8 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import { Column, Id, Task } from "@/widgets/types";
 import ColumnContainer from "../ColumnContainer/ColumnContainer";
-import PlusIcon from "@/shared/assets/icons/PlusIcon";
 import TaskCard from "../TaskCard/TaskCard";
+import cls from './KanbanBoard.module.scss';
 
 const defaultCols: Column[] = [
     {
@@ -23,7 +23,11 @@ const defaultCols: Column[] = [
     },
     {
         id: "doing",
-        title: "Work in progress",
+        title: "In progress",
+    },
+    {
+        id: "review",
+        title: "Code review",
     },
     {
         id: "done",
@@ -35,68 +39,67 @@ const defaultTasks: Task[] = [
     {
         id: "1",
         columnId: "todo",
-        content: "List admin APIs for dashboard",
+        content: "Покрасить кнопку",
     },
     {
         id: "2",
         columnId: "todo",
-        content:
-            "Develop user registration functionality with OTP delivered on SMS after email confirmation and phone number confirmation",
+        content: "Покрасить кнопку",
     },
     {
         id: "3",
         columnId: "doing",
-        content: "Conduct security testing",
+        content: "Покрасить кнопку",
     },
     {
         id: "4",
-        columnId: "doing",
-        content: "Analyze competitors",
+        columnId: "review",
+        content: "Покрасить кнопку",
     },
     {
         id: "5",
         columnId: "done",
-        content: "Create UI kit documentation",
+        content: "Покрасить кнопку",
     },
     {
         id: "6",
-        columnId: "done",
-        content: "Dev meeting",
+        columnId: "review",
+        content: "Покрасить кнопку",
     },
     {
         id: "7",
         columnId: "done",
-        content: "Deliver dashboard prototype",
+        content: "Покрасить кнопку",
     },
     {
         id: "8",
         columnId: "todo",
-        content: "Optimize application performance",
+        content: "Покрасить кнопку",
     },
     {
         id: "9",
         columnId: "todo",
-        content: "Implement data validation",
+        content: "Покрасить кнопку",
     },
     {
         id: "10",
-        columnId: "todo",
-        content: "Design database schema",
+        columnId: "review",
+        content: "Покрасить кнопку",
     },
     {
         id: "11",
-        columnId: "todo",
-        content: "Integrate SSL web certificates into workflow",
+        columnId: "review",
+        content: "Покрасить кнопку",
     },
     {
         id: "12",
         columnId: "doing",
-        content: "Implement error logging and monitoring",
+        content: "Покрасить кнопку",
     },
     {
         id: "13",
         columnId: "doing",
-        content: "Design and implement responsive UI",
+        content: "Покрасить кнопку",
     },
 ];
 
@@ -119,18 +122,7 @@ export function KanbanBoard() {
     );
 
     return (
-        <div
-            className="
-        m-auto
-        flex
-        min-h-screen
-        w-full
-        items-center
-        overflow-x-auto
-        overflow-y-hidden
-        px-[40px]
-    "
-        >
+        <div className={cls.KanbanBoard}>
             <DndContext
                 sensors={sensors}
                 onDragStart={onDragStart}
@@ -138,13 +130,12 @@ export function KanbanBoard() {
                 onDragOver={onDragOver}
             >
                 <div className="m-auto flex gap-4">
-                    <div className="flex gap-4">
+                    <div className={cls.column_container}>
                         <SortableContext items={columnsId}>
                             {columns.map((col) => (
                                 <ColumnContainer
                                     key={col.id}
                                     column={col}
-                                    deleteColumn={deleteColumn}
                                     updateColumn={updateColumn}
                                     createTask={createTask}
                                     deleteTask={deleteTask}
@@ -154,46 +145,23 @@ export function KanbanBoard() {
                             ))}
                         </SortableContext>
                     </div>
-                    <button
-                        onClick={() => {
-                            createNewColumn();
-                        }}
-                        className="
-      h-[60px]
-      w-[350px]
-      min-w-[350px]
-      cursor-pointer
-      rounded-lg
-      bg-mainBackgroundColor
-      border-2
-      border-columnBackgroundColor
-      p-4
-      ring-rose-500
-      hover:ring-2
-      flex
-      gap-2
-      "
-                    >
-                        <PlusIcon />
-                        Add Column
-                    </button>
                 </div>
 
-                {createPortal(
-                    <DragOverlay>
-                        {activeColumn && (
-                            <ColumnContainer
-                                column={activeColumn}
-                                deleteColumn={deleteColumn}
-                                updateColumn={updateColumn}
-                                createTask={createTask}
-                                deleteTask={deleteTask}
-                                updateTask={updateTask}
-                                tasks={tasks.filter(
-                                    (task) => task.columnId === activeColumn.id
-                                )}
-                            />
+                {activeColumn && (
+                    <ColumnContainer
+                        column={activeColumn}
+                        updateColumn={updateColumn}
+                        createTask={createTask}
+                        deleteTask={deleteTask}
+                        updateTask={updateTask}
+                        tasks={tasks.filter(
+                            (task) => task.columnId === activeColumn.id
                         )}
+                    />
+                )}
+                {createPortal(
+                    
+                    <DragOverlay>
                         {activeTask && (
                             <TaskCard
                                 task={activeTask}
@@ -229,23 +197,6 @@ export function KanbanBoard() {
             return { ...task, content };
         });
 
-        setTasks(newTasks);
-    }
-
-    function createNewColumn() {
-        const columnToAdd: Column = {
-            id: generateId(),
-            title: `Column ${columns.length + 1}`,
-        };
-
-        setColumns([...columns, columnToAdd]);
-    }
-
-    function deleteColumn(id: Id) {
-        const filteredColumns = columns.filter((col) => col.id !== id);
-        setColumns(filteredColumns);
-
-        const newTasks = tasks.filter((t) => t.columnId !== id);
         setTasks(newTasks);
     }
 

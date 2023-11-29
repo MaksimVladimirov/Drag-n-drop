@@ -1,18 +1,14 @@
-import TrashIcon from "@/shared/assets/icons/TrashIcon";
 import { Column, Id, Task } from "@/widgets/types";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
-// import TrashIcon from "../icons/TrashIcon";
-// import { Column, Id, Task } from "../types";
 import { CSS } from "@dnd-kit/utilities";
 import { useMemo, useState } from "react";
 import TaskCard from "../TaskCard/TaskCard";
-import PlusIcon from "@/shared/assets/icons/PlusIcon";
-// import PlusIcon from "../icons/PlusIcon";
-// import TaskCard from "./TaskCard";
+
+import cls from './ColumnContainter.module.scss'
+
 
 interface Props {
   column: Column;
-  deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
 
   createTask: (columnId: Id) => void;
@@ -23,8 +19,6 @@ interface Props {
 
 function ColumnContainer({
   column,
-  deleteColumn,
-  updateColumn,
   createTask,
   tasks,
   deleteTask,
@@ -80,17 +74,9 @@ function ColumnContainer({
 
   return (
     <div
+      className={cls.ColumnContainer}
       ref={setNodeRef}
       style={style}
-      className="
-  bg-columnBackgroundColor
-  w-[350px]
-  h-[500px]
-  max-h-[500px]
-  rounded-md
-  flex
-  flex-col
-  "
     >
       {/* Column title */}
       <div
@@ -128,40 +114,9 @@ function ColumnContainer({
         rounded-full
         "
           >
-            0
           </div>
-          {!editMode && column.title}
-          {editMode && (
-            <input
-              className="bg-black focus:border-rose-500 border rounded outline-none px-2"
-              value={column.title}
-              onChange={(e) => updateColumn(column.id, e.target.value)}
-              autoFocus
-              onBlur={() => {
-                setEditMode(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key !== "Enter") return;
-                setEditMode(false);
-              }}
-            />
-          )}
+            <p>{column.title}</p>
         </div>
-        <button
-          onClick={() => {
-            deleteColumn(column.id);
-          }}
-          className="
-        stroke-gray-500
-        hover:stroke-white
-        hover:bg-columnBackgroundColor
-        rounded
-        px-1
-        py-2
-        "
-        >
-          <TrashIcon />
-        </button>
       </div>
 
       {/* Column task container */}
@@ -178,15 +133,14 @@ function ColumnContainer({
         </SortableContext>
       </div>
       {/* Column footer */}
-      <button
+      {/* <button
         className="flex gap-2 items-center border-columnBackgroundColor border-2 rounded-md p-4 border-x-columnBackgroundColor hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
         onClick={() => {
           createTask(column.id);
         }}
       >
-        <PlusIcon />
         Add task
-      </button>
+      </button> */}
     </div>
   );
 }
