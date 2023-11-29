@@ -1,7 +1,7 @@
-const MainPage = () => (
+const BoardPage = () => (
     <div>
         Главная страница
     </div>
 );
 
-export default MainPage;
+export default BoardPage;
