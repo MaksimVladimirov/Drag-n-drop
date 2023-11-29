@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Id, Task } from "@/widgets/types";
-import TrashIcon from "@/shared/assets/icons/TrashIcon";
+// import TrashIcon from "@/shared/assets/icons/TrashIcon";
 
 interface Props {
   task: Task;
@@ -10,8 +10,8 @@ interface Props {
   updateTask: (id: Id, content: string) => void;
 }
 
-function TaskCard({ task, deleteTask, updateTask }: Props) {
-  const [mouseIsOver, setMouseIsOver] = useState(false);
+function TaskCard({ task, updateTask }: Props) {
+//   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(true);
 
   const {
@@ -37,7 +37,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
 
   const toggleEditMode = () => {
     setEditMode((prev) => !prev);
-    setMouseIsOver(false);
+    // setMouseIsOver(false);
   };
 
   if (isDragging) {
@@ -90,12 +90,12 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       {...listeners}
       onClick={toggleEditMode}
       className="bg-mainBackgroundColor p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative task"
-      onMouseEnter={() => {
-        setMouseIsOver(true);
-      }}
-      onMouseLeave={() => {
-        setMouseIsOver(false);
-      }}
+    //   onMouseEnter={() => {
+    //     setMouseIsOver(true);
+    //   }}
+    //   onMouseLeave={() => {
+    //     setMouseIsOver(false);
+    //   }}
     >
       <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
         {task.content}

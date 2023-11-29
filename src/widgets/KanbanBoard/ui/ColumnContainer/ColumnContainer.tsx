@@ -19,7 +19,7 @@ interface Props {
 
 function ColumnContainer({
   column,
-  createTask,
+//   createTask,
   tasks,
   deleteTask,
   updateTask,
