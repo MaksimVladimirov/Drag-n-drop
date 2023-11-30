@@ -15,7 +15,7 @@ import ColumnContainer from '../ColumnContainer/ColumnContainer';
 import TaskCard from '../TaskCard/TaskCard';
 import cls from './KanbanBoard.module.scss';
 import {
-    moveColumns, moveTaskToColumn, moveTasks, setActiveTask, setColumns, setTasks,
+    moveColumns, moveTaskToColumn, moveTasks, setActiveTask,
 } from '@/app/store/KanbanStore';
 import { RootState } from '@/app/store/store';
 

@@ -9,14 +9,13 @@ import {
     useSensor,
     useSensors,
 } from '@dnd-kit/core';
-import { arrayMove } from '@dnd-kit/sortable';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ColumnContainer from '../ColumnContainer/ColumnContainer';
 import TaskCard from '../TaskCard/TaskCard';
 import cls from './KanbanBoard.module.scss';
 import {
-    moveColumns, moveTaskToColumn, moveTasks, setActiveTask, setColumns, setTasks,
+    moveColumns, moveTaskToColumn, moveTasks, setActiveTask,
 } from '@/app/store/KanbanStore';
 import { RootState } from '@/app/store/store';
 

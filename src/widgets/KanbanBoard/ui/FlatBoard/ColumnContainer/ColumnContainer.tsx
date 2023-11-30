@@ -3,7 +3,6 @@ import { useMemo } from 'react';
 import { Column, Task } from '@/widgets/types';
 
 import cls from './ColumnContainter.module.scss';
-import { BoardType } from '@/pages/BoardPage/ui/BoardPage';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import TaskCard from '../TaskCard/TaskCard';
 
