@@ -1,3 +1,3 @@
-import { KanbanBoard } from "./ui/KanbanBoard/KanbanBoard";
+import { KanbanBoard } from './ui/KanbanBoard/KanbanBoard';
 
-export { KanbanBoard }
+export { KanbanBoard };
