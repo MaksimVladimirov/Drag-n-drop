@@ -1,0 +1,13 @@
+.ColumnContainer  {
+    width: 350px;
+    height: 600PX;
+    background-color: #cac1b5;
+    margin-right: 30px;
+    overflow: scroll;
+}
+
+.column_title {
+    //TODO: вынести в глобальные переменные
+    font-size: 18px;
+    text-align: center;
+}

@@ -8,4 +8,5 @@ export type Task = {
   id: Id;
   taskStatus: Id;
   content: string;
+  executor: string
 };

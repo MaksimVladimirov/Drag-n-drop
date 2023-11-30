@@ -3,7 +3,6 @@ import { FC } from 'react';
 import cls from './AppLink.module.scss';
 import { classNames } from '../../lib/classNames/classNames';
 
-
 interface AppLinkProps extends LinkProps {
     className?: string;
 }

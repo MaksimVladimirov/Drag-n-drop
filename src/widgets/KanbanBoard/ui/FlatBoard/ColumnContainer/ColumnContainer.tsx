@@ -1,17 +1,20 @@
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { useMemo } from 'react';
 import { Column, Task } from '@/widgets/types';
-import TaskCard from '../TaskCard/TaskCard';
 
 import cls from './ColumnContainter.module.scss';
+import { BoardType } from '@/pages/BoardPage/ui/BoardPage';
+import { classNames } from '@/shared/lib/classNames/classNames';
+import TaskCard from '../TaskCard/TaskCard';
 
 interface Props {
     column: Column;
     tasks: Task[];
+    boardType: string
 }
 
 function ColumnContainer(props: Props) {
-    const { column, tasks } = props;
+    const { column, tasks, boardType } = props;
     const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
     const { setNodeRef } = useSortable({
@@ -24,11 +27,12 @@ function ColumnContainer(props: Props) {
 
     return (
         <div
-            className={cls.ColumnContainer}
+            // cls.ColumnContainer
+            className={classNames(cls.ColumnContainer, {}, [boardType])}
             ref={setNodeRef}
         >
-            <p>{column.status}</p>
-            <div className="flex flex-grow flex-col gap-4 p-2 overflow-x-hidden overflow-y-auto">
+            <h4 className={cls.column_title}>{column.status}</h4>
+            <div>
                 <SortableContext items={tasksIds}>
                     {tasks.map((task) => (
                         <TaskCard

@@ -1,6 +1,6 @@
 const BacklogPage = () => (
     <div>
-         Backlog page
+        Backlog page
     </div>
 );
 

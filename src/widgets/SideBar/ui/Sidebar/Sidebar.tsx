@@ -1,17 +1,16 @@
-import { AppLink } from "@/shared/ui/AppLink/AppLink";
-import { FC } from "react";
-import cls from './Sidebar.module.scss'
+import { FC } from 'react';
+import { AppLink } from '@/shared/ui/AppLink/AppLink';
+import cls from './Sidebar.module.scss';
 
-export const Sidebar: FC = () => {
-    return (
-        <div className={cls.Sidebar}>
-            {/* <AppLink to="/backlog">
+export const Sidebar: FC = () => (
+    <div className={cls.Sidebar}>
+        {/* <AppLink to="/backlog">
                 Бэклог
             </AppLink> */}
-            <AppLink to="/">
-                Доска
-            </AppLink>
-            {/* <AppLink to="/reports">
+        <AppLink to="/">
+            Доска
+        </AppLink>
+        {/* <AppLink to="/reports">
                 Замечания
             </AppLink>
             <AppLink to="/releases">
@@ -32,6 +31,5 @@ export const Sidebar: FC = () => {
             <AppLink to="/setting">
                 Настройки
             </AppLink> */}
-        </div>
-    );
-};
+    </div>
+);

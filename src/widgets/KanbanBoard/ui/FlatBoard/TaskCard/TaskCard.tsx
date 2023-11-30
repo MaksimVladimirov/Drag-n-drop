@@ -1,5 +1,4 @@
 import { useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import { type Task } from '@/widgets/types';
 import cls from './TaskCard.module.scss';
 
@@ -9,12 +8,7 @@ interface Props {
 
 function TaskCard({ task }: Props) {
     const {
-        setNodeRef,
-        attributes,
-        listeners,
-        transform,
-        transition,
-        isDragging,
+        setNodeRef, attributes, listeners, isDragging,
     } = useSortable({
         id: task.id,
         data: {
@@ -23,16 +17,10 @@ function TaskCard({ task }: Props) {
         },
     });
 
-    const style = {
-        transition,
-        transform: CSS.Transform.toString(transform),
-    };
-
     if (isDragging) {
         return (
             <div
                 ref={setNodeRef}
-                style={style}
                 className={cls.task_container__dragging}
             />
         );
@@ -41,7 +29,6 @@ function TaskCard({ task }: Props) {
     return (
         <div
             ref={setNodeRef}
-            style={style}
             {...attributes}
             {...listeners}
             className={cls.task_container}
@@ -50,6 +37,7 @@ function TaskCard({ task }: Props) {
                 Исполнитель:
                 {' '}
                 {' '}
+                {task.executor}
             </p>
             <p>
                 Задание:
