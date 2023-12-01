@@ -26,7 +26,6 @@ function ColumnContainer(props: Props) {
 
     return (
         <div
-            // cls.ColumnContainer
             className={classNames(cls.ColumnContainer, {}, [boardType])}
             ref={setNodeRef}
         >

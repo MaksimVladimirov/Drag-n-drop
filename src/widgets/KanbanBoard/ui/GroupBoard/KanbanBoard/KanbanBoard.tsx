@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import {
     DndContext,
-    type DragEndEvent,
     type DragOverEvent,
     DragOverlay,
     type DragStartEvent,
@@ -14,9 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ColumnContainer from '../ColumnContainer/ColumnContainer';
 import TaskCard from '../TaskCard/TaskCard';
 import cls from './KanbanBoard.module.scss';
-import {
-    moveColumns, moveTaskToColumn, moveTasks, setActiveTask,
-} from '@/app/store/KanbanStore';
+import { moveTaskToColumn, moveTasks, setActiveTask } from '@/app/store/KanbanStore';
 import { RootState } from '@/app/store/store';
 
 interface KanbanBoardProps {
@@ -45,21 +42,8 @@ export function GroupKanbanBoard(props: KanbanBoardProps) {
         }
     }
 
-    function onDragEnd(event: DragEndEvent) {
+    function onDragEnd() {
         dispatch(setActiveTask(null));
-
-        const { active, over } = event;
-        if (!over) return;
-
-        const activeId = active.id;
-        const overId = over.id;
-
-        if (activeId === overId) return;
-
-        const isActiveAColumn = active.data.current?.type === 'Column';
-        if (!isActiveAColumn) return;
-
-        dispatch(moveColumns({ activeId, overId }));
     }
 
     function onDragOver(event: DragOverEvent) {
@@ -87,38 +71,48 @@ export function GroupKanbanBoard(props: KanbanBoardProps) {
         }
     }
 
+    // Уникальные исполнители
+    const executors = [...new Set(tasks.map((task) => task.executor))];
+
     return (
         <div className={cls.KanbanBoard}>
-            <DndContext
-                sensors={sensors}
-                // TODO: Fix
-                // eslint-disable react/jsx-no-bind
-                onDragStart={onDragStart}
-                onDragEnd={onDragEnd}
-                onDragOver={onDragOver}
-            >
-                <div className={cls.column_container}>
-                    {columns.map((col) => (
-                        <ColumnContainer
-                            key={col.status}
-                            column={col}
-                            tasks={tasks.filter((task) => task.taskStatus === col.status)}
-                            boardType={boardType}
-                        />
-                    ))}
-                </div>
 
-                {createPortal(
-                    <DragOverlay>
-                        {activeTask && (
-                            <TaskCard
-                                task={activeTask}
-                            />
+            <div className={cls.column_container}>
+
+                {executors.map((executor) => (
+                    <DndContext
+                        sensors={sensors}
+                        onDragStart={onDragStart}
+                        onDragEnd={onDragEnd}
+                        onDragOver={onDragOver}
+                    >
+                        <div key={executor}>
+                            <h3>{executor}</h3>
+                            {columns.map((col) => (
+                                <ColumnContainer
+                                    key={col.status}
+                                    column={col}
+                                    tasks={tasks.filter((task) => (
+                                        task.taskStatus === col.status
+                                        && task.executor === executor))}
+                                    boardType={boardType}
+                                />
+                            ))}
+
+                        </div>
+                        {createPortal(
+                            <DragOverlay>
+                                {activeTask && (
+                                    <TaskCard
+                                        task={activeTask}
+                                    />
+                                )}
+                            </DragOverlay>,
+                            document.body,
                         )}
-                    </DragOverlay>,
-                    document.body,
-                )}
-            </DndContext>
+                    </DndContext>
+                ))}
+            </div>
         </div>
     );
 }

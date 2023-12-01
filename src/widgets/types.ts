@@ -1,7 +1,7 @@
 export type Id = string | number;
 
 export type Column = {
-  status: string
+  status: string;
 };
 
 export type Task = {

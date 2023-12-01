@@ -118,13 +118,6 @@ const kanbanSlice = createSlice({
         setTasks: (state, action) => {
             state.tasks = action.payload;
         },
-        moveColumns: (state, action) => {
-            const { activeId, overId } = action.payload;
-            const activeColumnIndex = state.columns.findIndex((col) => col.status === activeId);
-            const overColumnIndex = state.columns.findIndex((col) => col.status === overId);
-
-            state.columns = arrayMove(state.columns, activeColumnIndex, overColumnIndex);
-        },
         moveTasks: (state, action) => {
             const { activeId, overId } = action.payload;
             const activeIndex = state.tasks.findIndex((t) => t.id === activeId);
@@ -149,7 +142,6 @@ export const {
     setActiveTask,
     setColumns,
     setTasks,
-    moveColumns,
     moveTasks,
     moveTaskToColumn,
 } = kanbanSlice.actions;

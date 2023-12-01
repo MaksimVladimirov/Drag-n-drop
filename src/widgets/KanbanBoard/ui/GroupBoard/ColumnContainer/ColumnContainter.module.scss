@@ -1,6 +1,7 @@
 .ColumnContainer  {
     width: 350px;
-    height: 600PX;
+    min-height: 200px;
+    max-height: 600PX;
     background-color: #cac1b5;
     margin-right: 30px;
     overflow: scroll;

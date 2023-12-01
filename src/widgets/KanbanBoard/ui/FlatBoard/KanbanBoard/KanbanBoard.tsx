@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-bind */
 import {
     DndContext,
-    type DragEndEvent,
     type DragOverEvent,
     DragOverlay,
     type DragStartEvent,
@@ -14,9 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ColumnContainer from '../ColumnContainer/ColumnContainer';
 import TaskCard from '../TaskCard/TaskCard';
 import cls from './KanbanBoard.module.scss';
-import {
-    moveColumns, moveTaskToColumn, moveTasks, setActiveTask,
-} from '@/app/store/KanbanStore';
+import { moveTaskToColumn, moveTasks, setActiveTask } from '@/app/store/KanbanStore';
 import { RootState } from '@/app/store/store';
 
 interface KanbanBoardProps {
@@ -45,21 +42,8 @@ export function FlatKanbanBoard(props: KanbanBoardProps) {
         }
     }
 
-    function onDragEnd(event: DragEndEvent) {
+    function onDragEnd() {
         dispatch(setActiveTask(null));
-
-        const { active, over } = event;
-        if (!over) return;
-
-        const activeId = active.id;
-        const overId = over.id;
-
-        if (activeId === overId) return;
-
-        const isActiveAColumn = active.data.current?.type === 'Column';
-        if (!isActiveAColumn) return;
-
-        dispatch(moveColumns({ activeId, overId }));
     }
 
     function onDragOver(event: DragOverEvent) {
@@ -91,8 +75,6 @@ export function FlatKanbanBoard(props: KanbanBoardProps) {
         <div className={cls.KanbanBoard}>
             <DndContext
                 sensors={sensors}
-                // TODO: Fix
-                // eslint-disable react/jsx-no-bind
                 onDragStart={onDragStart}
                 onDragEnd={onDragEnd}
                 onDragOver={onDragOver}
