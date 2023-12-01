@@ -64,7 +64,7 @@ export function FlatKanbanBoard(props: KanbanBoardProps) {
             dispatch(moveTasks({ activeId, overId }));
         }
 
-        const isOverAColumn = over.data.current?.type === 'Column';
+        const isOverAColumn = over.data.current?.type === 'Status';
 
         if (isActiveATask && isOverAColumn) {
             dispatch(moveTaskToColumn({ activeId, overId }));

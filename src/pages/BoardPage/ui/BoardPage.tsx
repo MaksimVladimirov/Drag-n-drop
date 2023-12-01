@@ -20,8 +20,7 @@ const BoardPage = () => {
                 <option value={BoardType.FLAT}>Плоская доска</option>
                 <option value={BoardType.GROUP}>Между пользователями</option>
             </select>
-
-            {board === 'flat' ? <FlatKanbanBoard boardType={board} /> : <GroupKanbanBoard boardType={board} />}
+            {board === 'flat' ? <FlatKanbanBoard boardType={board} /> : <GroupKanbanBoard />}
 
         </div>
     );

@@ -20,6 +20,28 @@ const defaultCols: Column[] = [
     },
 ];
 
+interface Users {
+    name: string
+}
+
+const defaultUsers: Users[] = [
+    {
+        name: 'Samantha Davis',
+    },
+    {
+        name: 'John Smith',
+
+    },
+    {
+        name: 'Robert Pattinson',
+
+    },
+    {
+        name: 'Bruce Wayne',
+
+    },
+];
+
 const defaultTasks: Task[] = [
     {
         id: '1',
@@ -106,14 +128,12 @@ const kanbanSlice = createSlice({
     initialState: {
         columns: [...defaultCols],
         tasks: [...defaultTasks],
+        users: [...defaultUsers],
         activeTask: null,
     },
     reducers: {
         setActiveTask: (state, action) => {
             state.activeTask = action.payload;
-        },
-        setColumns: (state, action) => {
-            state.columns = action.payload;
         },
         setTasks: (state, action) => {
             state.tasks = action.payload;
@@ -140,7 +160,6 @@ const kanbanSlice = createSlice({
 
 export const {
     setActiveTask,
-    setColumns,
     setTasks,
     moveTasks,
     moveTaskToColumn,

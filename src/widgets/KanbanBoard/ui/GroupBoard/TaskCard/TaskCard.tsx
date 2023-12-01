@@ -33,24 +33,24 @@ function TaskCard({ task }: Props) {
             {...listeners}
             className={cls.task_container}
         >
-            <p>
+            <div>
                 Исполнитель:
                 {' '}
                 {' '}
                 {task.executor}
-            </p>
-            <p>
+            </div>
+            <div>
                 Задание:
                 {' '}
                 {task.content}
-            </p>
-            <p>
+            </div>
+            <div>
                 Статус:
                 {' '}
                 {' '}
                 {' '}
                 {task.taskStatus}
-            </p>
+            </div>
         </div>
     );
 }

@@ -19,7 +19,7 @@ function ColumnContainer(props: Props) {
     const { setNodeRef } = useSortable({
         id: column.status,
         data: {
-            type: 'Column',
+            type: 'Status',
             column,
         },
     });

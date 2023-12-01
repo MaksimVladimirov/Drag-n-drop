@@ -9,24 +9,26 @@ import { classNames } from '@/shared/lib/classNames/classNames';
 interface Props {
     column: Column;
     tasks: Task[];
-    boardType: string
+    executor: string;
 }
 
 function ColumnContainer(props: Props) {
-    const { column, tasks, boardType } = props;
+    const {
+        column, tasks, executor,
+    } = props;
     const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
     const { setNodeRef } = useSortable({
         id: column.status,
         data: {
-            type: 'Column',
+            type: 'Status',
             column,
         },
     });
 
     return (
         <div
-            className={classNames(cls.ColumnContainer, {}, [boardType])}
+            className={classNames(cls.ColumnContainer, {}, [])}
             ref={setNodeRef}
         >
             <h4 className={cls.column_title}>{column.status}</h4>
