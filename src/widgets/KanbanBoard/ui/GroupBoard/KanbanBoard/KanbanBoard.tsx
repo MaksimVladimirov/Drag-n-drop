@@ -12,7 +12,9 @@ import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import TaskCard from '../TaskCard/TaskCard';
 import cls from './KanbanBoard.module.scss';
-import { moveTaskToColumn, moveTasks, setActiveTask } from '@/app/store/KanbanStore';
+import {
+    moveTaskToColumn, moveTasks, setActiveTask, moveTaskToNameColumn,
+} from '@/app/store/KanbanStore';
 import { RootState } from '@/app/store/store';
 import { ExecutorContainer } from '../ExecutorCon/ExecutorContainer';
 
@@ -43,63 +45,56 @@ export function GroupKanbanBoard() {
     function onDragOver(event: DragOverEvent) {
         const { active, over } = event;
         if (!over) return;
-
         const activeId = active.id;
         const overId = over.id;
 
         if (activeId === overId) return;
-
         const isActiveATask = active.data.current?.type === 'Task';
         const isOverATask = over.data.current?.type === 'Task';
         if (!isActiveATask) return;
         if (isActiveATask && isOverATask) {
             dispatch(moveTasks({ activeId, overId }));
         }
-        console.log(over.data.current?.type);
         const isOverAStatusColumn = over.data.current?.type === 'Status';
-        if (isActiveATask && isOverAStatusColumn) {
-            dispatch(moveTaskToColumn({ activeId, overId }));
+        const isOverAUserColumn = over.data.current?.type === 'User';
+        console.log(over.data.current?.type);
+
+        if (isActiveATask && isOverAUserColumn) {
+            dispatch(moveTaskToNameColumn({ activeId, overId }));
         }
 
-        const isOverAUserColumn = over.data.current?.type === 'User';
-        if (isActiveATask && isOverAUserColumn) {
+        if (isActiveATask && isOverAStatusColumn) {
             dispatch(moveTaskToColumn({ activeId, overId }));
         }
     }
 
     return (
         <div className={cls.KanbanBoard}>
-            <DndContext
-                sensors={sensors}
-                onDragStart={onDragStart}
-                onDragEnd={onDragEnd}
-                onDragOver={onDragOver}
-            >
+            <div className={cls.column_container}>
 
-                <div className={cls.column_container}>
+                <DndContext
+                    sensors={sensors}
+                    onDragStart={onDragStart}
+                    onDragEnd={onDragEnd}
+                    onDragOver={onDragOver}
+                >
                     {users.map((users) => (
-                        <DndContext
-                            sensors={sensors}
-                            onDragStart={onDragStart}
-                            onDragEnd={onDragEnd}
-                            onDragOver={onDragOver}
-                        >
-                            <ExecutorContainer key={users.name} user={users.name} tasks={tasks} />
-                            {createPortal(
-                                <DragOverlay>
-                                    {activeTask && (
-                                        <TaskCard
-                                            task={activeTask}
-                                        />
-                                    )}
-                                </DragOverlay>,
-                                document.body,
-                            )}
-                        </DndContext>
+                        <ExecutorContainer key={users.name} user={users.name} tasks={tasks} />
                     ))}
-                </div>
-            </DndContext>
-
+                    {
+                        createPortal(
+                            <DragOverlay>
+                                {activeTask && (
+                                    <TaskCard
+                                        task={activeTask}
+                                    />
+                                )}
+                            </DragOverlay>,
+                            document.body,
+                        )
+                    }
+                </DndContext>
+            </div>
         </div>
     );
 }

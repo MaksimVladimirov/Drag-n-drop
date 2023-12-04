@@ -1,5 +1,4 @@
 import { FC, useMemo } from 'react';
-
 import { useSelector } from 'react-redux';
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { RootState } from '@/app/store/store';
@@ -15,12 +14,10 @@ export const ExecutorContainer: FC<ExecutorContainerProps> = (props) => {
     const { user, tasks } = props;
     const columns = useSelector((state: RootState) => state.kanbanSlice.columns);
     const columnsId = useMemo(() => columns.map((column) => column.status), [columns]);
-
     const { setNodeRef } = useSortable({
         id: user,
         data: {
             type: 'User',
-            user,
         },
     });
 

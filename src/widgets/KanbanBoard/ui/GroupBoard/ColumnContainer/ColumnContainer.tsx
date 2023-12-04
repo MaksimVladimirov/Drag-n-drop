@@ -22,10 +22,8 @@ function ColumnContainer(props: Props) {
         id: column.status,
         data: {
             type: 'Status',
-            column,
         },
     });
-
     return (
         <div
             className={classNames(cls.ColumnContainer, {}, [])}

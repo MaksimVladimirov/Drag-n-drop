@@ -14,7 +14,7 @@ interface Props {
 
 function ColumnContainer(props: Props) {
     const { column, tasks, boardType } = props;
-    const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
+    // const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
     const { setNodeRef } = useSortable({
         id: column.status,
@@ -31,14 +31,14 @@ function ColumnContainer(props: Props) {
         >
             <h4 className={cls.column_title}>{column.status}</h4>
             <div>
-                <SortableContext items={tasksIds}>
-                    {tasks.map((task) => (
-                        <TaskCard
-                            key={task.id}
-                            task={task}
-                        />
-                    ))}
-                </SortableContext>
+                {/* <SortableContext items={tasksIds}> */}
+                {tasks.map((task) => (
+                    <TaskCard
+                        key={task.id}
+                        task={task}
+                    />
+                ))}
+                {/* </SortableContext> */}
             </div>
         </div>
     );

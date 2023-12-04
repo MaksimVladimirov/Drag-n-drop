@@ -150,10 +150,33 @@ const kanbanSlice = createSlice({
                 state.tasks = arrayMove(state.tasks, activeIndex, overIndex);
             }
         },
+
+        // moveGTasks: (state, action) => {
+        //     const { activeId, overId } = action.payload;
+        //     const activeIndex = state.tasks.findIndex((t) => t.id === activeId);
+        //     const overIndex = state.tasks.findIndex((t) => t.id === overId);
+
+        //     if (state.tasks[activeIndex].executor !== state.tasks[overIndex].executor) {
+        //         state.tasks[activeIndex].executor = state.tasks[overIndex].executor;
+        //         state.tasks = arrayMove(state.tasks, activeIndex, overIndex - 1);
+        //     } else {
+        //         state.tasks = arrayMove(state.tasks, activeIndex, overIndex);
+        //     }
+        // },
+
         moveTaskToColumn: (state, action) => {
             const { activeId, overId } = action.payload;
             const activeIndex = state.tasks.findIndex((t) => t.id === activeId);
+            // console.log(activeId, overId);
             state.tasks[activeIndex].taskStatus = overId;
+            // console.log('moved to column');
+        },
+        moveTaskToNameColumn: (state, action) => {
+            const { activeId, overId } = action.payload;
+            const activeIndex = state.tasks.findIndex((t) => t.id === activeId);
+            // console.log(activeId, overId);
+            // console.log(state.tasks[activeIndex].executor);
+            state.tasks[activeIndex].executor = overId;
         },
     },
 });
@@ -163,6 +186,7 @@ export const {
     setTasks,
     moveTasks,
     moveTaskToColumn,
+    moveTaskToNameColumn,
 } = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;

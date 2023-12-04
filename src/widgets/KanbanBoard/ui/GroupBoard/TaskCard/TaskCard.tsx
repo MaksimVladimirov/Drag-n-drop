@@ -35,20 +35,14 @@ function TaskCard({ task }: Props) {
         >
             <div>
                 Исполнитель:
-                {' '}
-                {' '}
                 {task.executor}
             </div>
             <div>
                 Задание:
-                {' '}
                 {task.content}
             </div>
             <div>
                 Статус:
-                {' '}
-                {' '}
-                {' '}
                 {task.taskStatus}
             </div>
         </div>
