@@ -1,44 +1,44 @@
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { useMemo } from 'react';
 import { Column, Task } from '@/widgets/types';
-import TaskCard from '../TaskCard/TaskCard';
 
 import cls from './ColumnContainter.module.scss';
 import { classNames } from '@/shared/lib/classNames/classNames';
+import TaskCard from '../TaskCard/TaskCard';
 
 interface Props {
-    column: Column;
+    column: any;
     tasks: Task[];
-    executor: string;
+    boardType: string
 }
 
 function ColumnContainer(props: Props) {
-    const {
-        column, tasks, executor,
-    } = props;
-    const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
+    const { column, tasks, boardType } = props;
+    // const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
     const { setNodeRef } = useSortable({
-        id: column.status,
+        id: column.name,
         data: {
             type: 'Status',
+            column,
         },
     });
+
     return (
         <div
-            className={classNames(cls.ColumnContainer, {}, [])}
+            className={classNames(cls.ColumnContainer, {}, [boardType])}
             ref={setNodeRef}
         >
-            <h4 className={cls.column_title}>{column.status}</h4>
+            <h4 className={cls.column_title}>{column.name}</h4>
             <div>
-                <SortableContext items={tasksIds}>
-                    {tasks.map((task) => (
-                        <TaskCard
-                            key={task.id}
-                            task={task}
-                        />
-                    ))}
-                </SortableContext>
+                {/* <SortableContext items={tasksIds}> */}
+                {tasks.map((task) => (
+                    <TaskCard
+                        key={task.id}
+                        task={task}
+                    />
+                ))}
+                {/* </SortableContext> */}
             </div>
         </div>
     );
