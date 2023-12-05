@@ -12,7 +12,7 @@ interface Props {
     switchType: BoardTypeEnum;
 }
 
-function ColumnContainer(props: Props) {
+export const ColumnContainer = (props: Props) => {
     const { columnName, tasks, switchType } = props;
 
     const { setNodeRef } = useSortable({
@@ -43,6 +43,4 @@ function ColumnContainer(props: Props) {
             </div>
         </div>
     );
-}
-
-export default ColumnContainer;
+};

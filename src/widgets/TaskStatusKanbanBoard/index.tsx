@@ -1,3 +1,1 @@
-import { TaskStatusKanbanBoard } from './KanbanBoard/KanbanBoard';
-
-export { TaskStatusKanbanBoard };
+export { TaskStatusKanbanBoard } from './KanbanBoard/KanbanBoard';

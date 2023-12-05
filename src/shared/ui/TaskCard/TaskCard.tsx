@@ -2,11 +2,11 @@ import { useSortable } from '@dnd-kit/sortable';
 import { type Task } from '@/widgets/types';
 import cls from './TaskCard.module.scss';
 import { classNames } from '@/shared/lib/classNames/classNames';
-import Avatar from '../../assets/icons/avatar.svg';
-import TodoStatus from '../../assets/icons/taskStatuses/todo.svg';
-import InReviewStatus from '../../assets/icons/taskStatuses/review.svg';
-import CompletedStatus from '../../assets/icons/taskStatuses/completed.svg';
-import AtWorkStatus from '../../assets/icons/taskStatuses/at_work.svg';
+import Avatar from '@/shared/assets/icons/avatar.svg';
+import TodoStatus from '@/shared/assets/icons/taskStatuses/todo.svg';
+import InReviewStatus from '@/shared/assets/icons/taskStatuses/review.svg';
+import CompletedStatus from '@/shared/assets/icons/taskStatuses/completed.svg';
+import AtWorkStatus from '@/shared//assets/icons/taskStatuses/at_work.svg';
 
 interface Props {
     task: Task
@@ -19,7 +19,7 @@ const TaskStatusesSvgs = {
     'В работе': AtWorkStatus,
 
 };
-function TaskCard({ task }: Props) {
+export const TaskCard = ({ task }: Props) => {
     const {
         setNodeRef, attributes, listeners, isDragging,
     } = useSortable({
@@ -61,6 +61,6 @@ function TaskCard({ task }: Props) {
             </div>
         </div>
     );
-}
+};
 
 export default TaskCard;

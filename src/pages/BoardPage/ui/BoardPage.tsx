@@ -10,7 +10,7 @@ export enum BoardTypeEnum {
     SWITCH_BETWEEN_STATUSES = 'switchingBetweenStatuses'
 }
 
-const BoardPage = () => {
+export const BoardPage = () => {
     const [boardType, setBoardType] = useState<BoardTypeEnum>(BoardTypeEnum.SWITCH_BETWEEN_USERS);
 
     const handleChangeBoardType = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -30,5 +30,3 @@ const BoardPage = () => {
         </div>
     );
 };
-
-export default BoardPage;

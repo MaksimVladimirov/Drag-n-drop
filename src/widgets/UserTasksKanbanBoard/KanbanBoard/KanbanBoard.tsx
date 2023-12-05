@@ -10,7 +10,6 @@ import {
 } from '@dnd-kit/core';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ColumnContainer from '../../../features/ColumnContainer/ColumnContainer';
 
 import cls from './KanbanBoard.module.scss';
 import {
@@ -20,8 +19,9 @@ import { RootState } from '@/app/store/store';
 import TaskCard from '@/shared/ui/TaskCard/TaskCard';
 import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
 import { classNames } from '@/shared/lib/classNames/classNames';
+import { ColumnContainer } from '@/features/ColumnContainer';
 
-export function UserTasksKanbanBoard() {
+export const UserTasksKanbanBoard = () => {
     const dispatch = useDispatch();
     const tasks = useSelector((state: RootState) => state.kanbanSlice.tasks);
     const activeTask = useSelector((state: RootState) => state.kanbanSlice.activeTask);
@@ -101,4 +101,4 @@ export function UserTasksKanbanBoard() {
             </DndContext>
         </div>
     );
-}
+};
