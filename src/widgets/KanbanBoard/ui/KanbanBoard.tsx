@@ -11,9 +11,11 @@ import {
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { FC } from 'react';
 import cls from './KanbanBoard.module.scss';
 import {
-    moveTaskToNameColumn, moveTasksToNames, setActiveTask,
+    moveTaskToColumn,
+    moveTaskToNameColumn, moveTasks, moveTasksToNames, setActiveTask,
 } from '@/app/store/KanbanStore';
 import { RootState } from '@/app/store/store';
 import TaskCard from '@/shared/ui/TaskCard/TaskCard';
@@ -21,11 +23,17 @@ import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { ColumnContainer } from '@/features/ColumnContainer';
 
-export const UserTasksKanbanBoard = () => {
+interface Props {
+    boardType: BoardTypeEnum
+}
+
+export const KanbanBoard: FC<Props> = (props) => {
+    const { boardType } = props;
     const dispatch = useDispatch();
     const tasks = useSelector((state: RootState) => state.kanbanSlice.tasks);
     const activeTask = useSelector((state: RootState) => state.kanbanSlice.activeTask);
-    const uniqueUserNames = [...new Set(tasks.map((task) => task.userName))];
+    const statusColumns = useSelector((state: RootState) => state.kanbanSlice.statusColumns);
+    const nameColumns = useSelector((state: RootState) => state.kanbanSlice.nameColumns);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -56,16 +64,18 @@ export const UserTasksKanbanBoard = () => {
 
         const isActiveATask = active.data.current?.type === 'Task';
         const isOverATask = over.data.current?.type === 'Task';
+        const isOverAStatusColumn = over.data.current?.type === BoardTypeEnum.SWITCH_BETWEEN_STATUSES;
+        const isOverANameColumn = over.data.current?.type === BoardTypeEnum.SWITCH_BETWEEN_USERS;
 
         if (!isActiveATask) return;
+
         if (isActiveATask && isOverATask) {
-            dispatch(moveTasksToNames({ activeId, overId }));
+            dispatch(moveTasks({ activeId, overId, isOverAStatusColumn }));
         }
 
-        const isOverAColumn = over.data.current?.type === BoardTypeEnum.SWITCH_BETWEEN_STATUSES;
 
-        if (isActiveATask && isOverAColumn) {
-            dispatch(moveTaskToNameColumn({ activeId, overId }));
+        if (isActiveATask && (isOverAStatusColumn || isOverANameColumn)) {
+            dispatch(moveTaskToColumn({ activeId, overId, isOverAStatusColumn }));
         }
     }
 
@@ -78,14 +88,19 @@ export const UserTasksKanbanBoard = () => {
                 onDragOver={onDragOver}
             >
                 <div className={classNames(cls.KanbanBoard_container)}>
-                    {uniqueUserNames.map((userName) => (
-                        <ColumnContainer
-                            switchType={BoardTypeEnum.SWITCH_BETWEEN_USERS}
-                            key={userName}
-                            columnName={userName}
-                            tasks={tasks.filter((task) => task.userName === userName)}
-                        />
-                    ))}
+                    {(boardType === BoardTypeEnum.SWITCH_BETWEEN_STATUSES
+                        ? statusColumns
+                        : nameColumns)
+                        .map((column) => (
+                            <ColumnContainer
+                                switchType={boardType}
+                                key={column}
+                                columnName={column}
+                                tasks={boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS
+                                    ? tasks.filter((task) => task.name === column)
+                                    : tasks.filter((task) => task.status === column)}
+                            />
+                        ))}
                 </div>
 
                 {createPortal(

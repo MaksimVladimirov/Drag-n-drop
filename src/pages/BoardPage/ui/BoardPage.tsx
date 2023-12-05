@@ -1,16 +1,15 @@
 import { ChangeEvent, useState } from 'react';
 
 import { classNames } from '@/shared/lib/classNames/classNames';
-import { TaskStatusKanbanBoard } from '@/widgets/TaskStatusKanbanBoard';
-import { UserTasksKanbanBoard } from '@/widgets/UserTasksKanbanBoard';
 import cls from './BoardPage.module.scss';
+import { KanbanBoard } from '@/widgets/KanbanBoard';
 
 export enum BoardTypeEnum {
     SWITCH_BETWEEN_USERS = 'switchingBetweenUsers',
     SWITCH_BETWEEN_STATUSES = 'switchingBetweenStatuses'
 }
 
-export const BoardPage = () => {
+const BoardPage = () => {
     const [boardType, setBoardType] = useState<BoardTypeEnum>(BoardTypeEnum.SWITCH_BETWEEN_USERS);
 
     const handleChangeBoardType = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -23,10 +22,9 @@ export const BoardPage = () => {
                 <option value="switchingBetweenUsers">Переключение между пользователями</option>
                 <option value="switchingBetweenStatuses">Переключение между статусами</option>
             </select>
-            {boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS
-                ? <UserTasksKanbanBoard />
-                : <TaskStatusKanbanBoard />}
-
+            <KanbanBoard boardType={boardType} />
         </div>
     );
 };
+
+export default BoardPage;

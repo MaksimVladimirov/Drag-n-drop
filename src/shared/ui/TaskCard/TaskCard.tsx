@@ -47,7 +47,7 @@ export const TaskCard = ({ task }: Props) => {
             className={classNames(cls.TaskCard)}
         >
             <div className={classNames(cls.TaskCard__user_field)}>
-                <p className={classNames(cls.TaskCard__user_field__title)}>{task.userName}</p>
+                <p className={classNames(cls.TaskCard__user_field__title)}>{task.name}</p>
                 <img src={Avatar} alt="" />
             </div>
             <div className={classNames(cls.TaskCard__task_description_field)}>
@@ -56,8 +56,8 @@ export const TaskCard = ({ task }: Props) => {
                 {task.content}
             </div>
             <div className={classNames(cls.TaskCard__status_field)}>
-                <p className={classNames(cls.TaskCard__status_field__title)}>{task.taskStatus}</p>
-                <img src={TaskStatusesSvgs[task.taskStatus as keyof typeof TaskStatusesSvgs]} alt="" />
+                <p className={classNames(cls.TaskCard__status_field__title)}>{task.status}</p>
+                <img src={TaskStatusesSvgs[task.status as keyof typeof TaskStatusesSvgs]} alt="" />
             </div>
         </div>
     );
