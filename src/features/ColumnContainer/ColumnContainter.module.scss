@@ -1,0 +1,20 @@
+.ColumnContainer  {
+    width: 350px;
+    height: 600PX;
+    padding-top: 15px;
+    background-color: var(--bg-color);
+    margin-right: 30px;
+    overflow: scroll;
+    &_title {
+        font-size: var(--font-size-m);
+        width: min-content;
+        height: 30px;
+        background-color: white;
+        white-space: nowrap;
+        border-end-end-radius: 20px;
+        span {
+            color: var(--secondary-color);
+            margin-right: 10px;
+        }
+    }
+}

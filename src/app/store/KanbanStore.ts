@@ -20,106 +20,84 @@ const defaultCols: Column[] = [
     },
 ];
 
-type Users = {
-    name: string
-}
-
-const defaultUsers: Users[] = [
-    {
-        name: 'Samantha Davis',
-    },
-    {
-        name: 'John Smith',
-
-    },
-    {
-        name: 'Robert Pattinson',
-
-    },
-    {
-        name: 'Bruce Wayne',
-
-    },
-];
-
 const defaultTasks: Task[] = [
     {
         id: '1',
         taskStatus: 'Сделать',
         content: 'Покрасить кнопку',
-        executor: 'Samantha Davis',
+        userName: 'Samantha Davis',
     },
     {
         id: '2',
         taskStatus: 'Сделать',
         content: 'Редизайн в соответсвии с Figma',
-        executor: 'Samantha Davis',
+        userName: 'Samantha Davis',
     },
     {
         id: '3',
         taskStatus: 'В работе',
         content: 'Типизация данных',
-        executor: 'John Smith',
+        userName: 'John Smith',
     },
     {
         id: '4',
         taskStatus: 'На ревью',
         content: 'Изменить шрифты',
-        executor: 'John Smith',
+        userName: 'John Smith',
     },
     {
         id: '5',
         taskStatus: 'Сделано',
         content: 'Вынести в глобальные переменные',
-        executor: 'Samantha Davis',
+        userName: 'Samantha Davis',
     },
     {
         id: '6',
         taskStatus: 'На ревью',
         content: 'Настроить линтер',
-        executor: 'Robert Pattinson',
+        userName: 'Robert Pattinson',
     },
     {
         id: '7',
         taskStatus: 'Сделано',
         content: 'Настроить prettier',
-        executor: 'John Smith',
+        userName: 'John Smith',
     },
     {
         id: '8',
         taskStatus: 'Сделать',
         content: 'Получение данных с бэка',
-        executor: 'Robert Pattinson',
+        userName: 'Robert Pattinson',
     },
     {
         id: '9',
         taskStatus: 'Сделать',
         content: 'Исправить местополодение пользователя',
-        executor: 'Bruce Wayne',
+        userName: 'Bruce Wayne',
     },
     {
         id: '10',
         taskStatus: 'На ревью',
         content: 'Сдвинуть кнопку на 10px',
-        executor: 'Robert Pattinson',
+        userName: 'Robert Pattinson',
     },
     {
         id: '11',
         taskStatus: 'На ревью',
         content: 'Покрасить кнопку',
-        executor: 'John Smith',
+        userName: 'John Smith',
     },
     {
         id: '12',
         taskStatus: 'В работе',
         content: 'Рефакторинг страницы',
-        executor: 'John Smith',
+        userName: 'John Smith',
     },
     {
         id: '13',
         taskStatus: 'В работе',
         content: 'Исправления после тестирования',
-        executor: 'Bruce Wayne',
+        userName: 'Bruce Wayne',
     },
 ];
 
@@ -128,7 +106,6 @@ const kanbanSlice = createSlice({
     initialState: {
         columns: [...defaultCols],
         tasks: [...defaultTasks],
-        users: [...defaultUsers],
         activeTask: null,
     },
     reducers: {
@@ -155,8 +132,8 @@ const kanbanSlice = createSlice({
             const activeIndex = state.tasks.findIndex((t) => t.id === activeId);
             const overIndex = state.tasks.findIndex((t) => t.id === overId);
 
-            if (state.tasks[activeIndex].executor !== state.tasks[overIndex].executor) {
-                state.tasks[activeIndex].executor = state.tasks[overIndex].executor;
+            if (state.tasks[activeIndex].userName !== state.tasks[overIndex].userName) {
+                state.tasks[activeIndex].userName = state.tasks[overIndex].userName;
                 state.tasks = arrayMove(state.tasks, activeIndex, overIndex - 1);
             } else {
                 state.tasks = arrayMove(state.tasks, activeIndex, overIndex);
@@ -172,7 +149,7 @@ const kanbanSlice = createSlice({
         moveTaskToNameColumn: (state, action) => {
             const { activeId, overId } = action.payload;
             const activeIndex = state.tasks.findIndex((t) => t.id === activeId);
-            state.tasks[activeIndex].executor = overId;
+            state.tasks[activeIndex].userName = overId;
         },
     },
 });

@@ -6,7 +6,7 @@ export type Column = {
 
 export type Task = {
   id: Id;
-  taskStatus: Id;
+  taskStatus: string;
   content: string;
-  executor: string
+  userName: string
 };

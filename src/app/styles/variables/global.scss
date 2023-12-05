@@ -1,0 +1,20 @@
+:root {
+    --font-family-main: consolas, "Times New Roman", serif;
+    --font-size-m: 20px;
+    --font-size-l: 24px;
+    --font-line-m: 24px;
+    --font-line-l: 32px;
+
+    // Цвета
+    --primary-color: #2828f7;
+    --secondary-color: #ff5e00;
+    --bg-color: #e4e4ea;
+    --hovered-color: #0549f6;
+
+    // Размеры navbar
+    --sidebar-height: 100vh;
+    --sidebar-width: 100px;
+
+    // Border radius
+    --border-radius: 5px
+}

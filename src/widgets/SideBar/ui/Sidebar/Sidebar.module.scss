@@ -1,10 +1,9 @@
 .Sidebar {
-    width: 100px;
-    height: 100vh;
-    background: #87e4ee;
+    width: var(--sidebar-width);
+    height: var(--sidebar-height);
+    background: var(--bg-color);
     display: flex;
     align-items: center;
     padding: 20px;
     margin-right: 20px;
-
 }

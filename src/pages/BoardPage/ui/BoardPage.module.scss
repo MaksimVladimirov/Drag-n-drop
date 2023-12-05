@@ -1,0 +1,10 @@
+.BoardPage {
+    &_title {
+        color: var(--primary-color);
+    }
+    &_select {
+        margin-top: 20px;
+        border-radius: var(--border-radius);
+    }
+    
+}

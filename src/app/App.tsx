@@ -4,9 +4,11 @@ import './styles/index.scss';
 
 function App() {
     return (
-        <div className="content_page">
-            <Sidebar />
-            <AppRouter />
+        <div className="app">
+            <div className="content_page">
+                <Sidebar />
+                <AppRouter />
+            </div>
         </div>
     );
 }

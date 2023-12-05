@@ -1,26 +1,31 @@
 import { ChangeEvent, useState } from 'react';
-import { GroupKanbanBoard } from '@/widgets/KanbanBoard/ui/GroupBoard';
-import { FlatKanbanBoard } from '@/widgets/KanbanBoard/ui/FlatBoard';
 
-export enum BoardType {
-    FLAT = 'flat',
-    GROUP = 'group'
+import { classNames } from '@/shared/lib/classNames/classNames';
+import { TaskStatusKanbanBoard } from '@/widgets/TaskStatusKanbanBoard';
+import { UserTasksKanbanBoard } from '@/widgets/UserTasksKanbanBoard';
+import cls from './BoardPage.module.scss';
+
+export enum BoardTypeEnum {
+    SWITCH_BETWEEN_USERS = 'switchingBetweenUsers',
+    SWITCH_BETWEEN_STATUSES = 'switchingBetweenStatuses'
 }
 
 const BoardPage = () => {
-    const [board, setBoard] = useState<BoardType>(BoardType.FLAT);
+    const [boardType, setBoardType] = useState<BoardTypeEnum>(BoardTypeEnum.SWITCH_BETWEEN_USERS);
 
     const handleChangeBoardType = (e: ChangeEvent<HTMLSelectElement>) => {
-        setBoard(e.target.value as BoardType);
+        setBoardType(e.target.value as BoardTypeEnum);
     };
     return (
-        <div>
-            <h1> Доска</h1>
-            <select name="pets" id="pet-select" onChange={handleChangeBoardType}>
-                <option value={BoardType.FLAT}>Плоская доска</option>
-                <option value={BoardType.GROUP}>Между пользователями</option>
+        <div className={classNames(cls.BoardPage)}>
+            <h2 className={classNames(cls.BoardPage_title)}> Доска</h2>
+            <select className={classNames(cls.BoardPage_select)} onChange={handleChangeBoardType}>
+                <option value="switchingBetweenUsers">Переключение между пользователями</option>
+                <option value="switchingBetweenStatuses">Переключение между статусами</option>
             </select>
-            {board === 'flat' ? <FlatKanbanBoard boardType={board} /> : <GroupKanbanBoard />}
+            {boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS
+                ? <UserTasksKanbanBoard />
+                : <TaskStatusKanbanBoard />}
 
         </div>
     );

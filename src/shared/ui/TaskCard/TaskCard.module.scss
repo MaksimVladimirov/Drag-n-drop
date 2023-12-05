@@ -1,0 +1,38 @@
+.TaskCard {
+    position: relative;
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    height: 100px;
+    background-color: #f9f8f8;
+    padding: 5px;
+    margin: 10px;
+    cursor:grab;
+    &:hover {
+        border: 1px solid var(--secondary-color);
+    }
+    &__dragging {
+        border: 1px solid var(--secondary-color);
+        border-radius: var(--border-radius);
+        height: 100px;
+        background-color: #aba5a5;
+        padding: 5px;
+        margin: 10px;
+        cursor:grab;
+    }
+    &__user_field {
+        display: flex;
+        align-items: center;
+        &__title {
+            margin-right: 10px;
+        }
+    }
+    &__status_field {
+        display: flex;
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+        &__title {
+            margin-right: 5px;
+        }
+    }
+}
