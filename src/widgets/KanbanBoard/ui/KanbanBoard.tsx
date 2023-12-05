@@ -13,10 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { FC } from 'react';
 import cls from './KanbanBoard.module.scss';
-import {
-    moveTaskToColumn,
-    moveTaskToNameColumn, moveTasks, moveTasksToNames, setActiveTask,
-} from '@/app/store/KanbanStore';
+import { moveTaskToColumn, moveTasks, setActiveTask } from '@/app/store/KanbanStore';
 import { RootState } from '@/app/store/store';
 import TaskCard from '@/shared/ui/TaskCard/TaskCard';
 import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
@@ -72,7 +69,6 @@ export const KanbanBoard: FC<Props> = (props) => {
         if (isActiveATask && isOverATask) {
             dispatch(moveTasks({ activeId, overId, isOverAStatusColumn }));
         }
-
 
         if (isActiveATask && (isOverAStatusColumn || isOverANameColumn)) {
             dispatch(moveTaskToColumn({ activeId, overId, isOverAStatusColumn }));
