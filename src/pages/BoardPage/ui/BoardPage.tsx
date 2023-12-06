@@ -15,6 +15,7 @@ const BoardPage = () => {
     const handleChangeBoardType = (e: ChangeEvent<HTMLSelectElement>) => {
         setBoardType(e.target.value as BoardTypeEnum);
     };
+
     return (
         <div className={classNames(cls.BoardPage)}>
             <h2 className={classNames(cls.BoardPage_title)}> Доска</h2>

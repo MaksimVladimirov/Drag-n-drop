@@ -1,12 +1,13 @@
 import { useSortable } from '@dnd-kit/sortable';
-import { type Task } from '@/widgets/types';
-import cls from './TaskCard.module.scss';
+
+import { Task } from '@/app/store/KanbanStore';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import Avatar from '@/shared/assets/icons/avatar.svg';
 import TodoStatus from '@/shared/assets/icons/taskStatuses/todo.svg';
 import InReviewStatus from '@/shared/assets/icons/taskStatuses/review.svg';
 import CompletedStatus from '@/shared/assets/icons/taskStatuses/completed.svg';
 import AtWorkStatus from '@/shared//assets/icons/taskStatuses/at_work.svg';
+import cls from './TaskCard.module.scss';
 
 interface Props {
     task: Task

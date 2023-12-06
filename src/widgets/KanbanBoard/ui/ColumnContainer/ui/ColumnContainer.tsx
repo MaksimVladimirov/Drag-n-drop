@@ -1,10 +1,10 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { Task } from '@/widgets/types';
 
-import cls from './ColumnContainter.module.scss';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import TaskCard from '@/shared/ui/TaskCard/TaskCard';
 import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
+import cls from './ColumnContainter.module.scss';
 
 interface Props {
     columnName: string;

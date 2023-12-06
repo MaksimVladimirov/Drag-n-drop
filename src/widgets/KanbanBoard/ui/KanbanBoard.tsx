@@ -10,15 +10,17 @@ import {
 } from '@dnd-kit/core';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { FC } from 'react';
-import cls from './KanbanBoard.module.scss';
+
 import { moveTaskToColumn, moveTasks, setActiveTask } from '@/app/store/KanbanStore';
-import { RootState } from '@/app/store/store';
 import TaskCard from '@/shared/ui/TaskCard/TaskCard';
 import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
 import { classNames } from '@/shared/lib/classNames/classNames';
-import { ColumnContainer } from '@/features/ColumnContainer';
+import { ColumnContainer } from './ColumnContainer';
+import cls from './KanbanBoard.module.scss';
+import {
+    getActiveTask, getInitialTasks, getUserNames, getUserStatuses,
+} from '../model/selectors/kanbanBoardSelectors';
 
 interface Props {
     boardType: BoardTypeEnum
@@ -27,10 +29,10 @@ interface Props {
 export const KanbanBoard: FC<Props> = (props) => {
     const { boardType } = props;
     const dispatch = useDispatch();
-    const tasks = useSelector((state: RootState) => state.kanbanSlice.tasks);
-    const activeTask = useSelector((state: RootState) => state.kanbanSlice.activeTask);
-    const statusColumns = useSelector((state: RootState) => state.kanbanSlice.statusColumns);
-    const nameColumns = useSelector((state: RootState) => state.kanbanSlice.nameColumns);
+    const tasks = useSelector(getInitialTasks);
+    const activeTask = useSelector(getActiveTask);
+    const userStatusesColumns = useSelector(getUserStatuses);
+    const userNamesColumns = useSelector(getUserNames);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -61,17 +63,16 @@ export const KanbanBoard: FC<Props> = (props) => {
 
         const isActiveATask = active.data.current?.type === 'Task';
         const isOverATask = over.data.current?.type === 'Task';
-        const isOverAStatusColumn = over.data.current?.type === BoardTypeEnum.SWITCH_BETWEEN_STATUSES;
-        const isOverANameColumn = over.data.current?.type === BoardTypeEnum.SWITCH_BETWEEN_USERS;
-
+        const isOverAStatusColumn = over.data.current?.type === boardType;
+        const isOverANameColumn = over.data.current?.type === boardType;
         if (!isActiveATask) return;
 
         if (isActiveATask && isOverATask) {
-            dispatch(moveTasks({ activeId, overId, isOverAStatusColumn }));
+            dispatch(moveTasks({ activeId, overId, boardType }));
         }
 
         if (isActiveATask && (isOverAStatusColumn || isOverANameColumn)) {
-            dispatch(moveTaskToColumn({ activeId, overId, isOverAStatusColumn }));
+            dispatch(moveTaskToColumn({ activeId, overId, boardType }));
         }
     }
 
@@ -85,16 +86,16 @@ export const KanbanBoard: FC<Props> = (props) => {
             >
                 <div className={classNames(cls.KanbanBoard_container)}>
                     {(boardType === BoardTypeEnum.SWITCH_BETWEEN_STATUSES
-                        ? statusColumns
-                        : nameColumns)
-                        .map((column) => (
+                        ? userStatusesColumns
+                        : userNamesColumns)
+                        .map((columnName) => (
                             <ColumnContainer
                                 switchType={boardType}
-                                key={column}
-                                columnName={column}
+                                key={columnName}
+                                columnName={columnName}
                                 tasks={boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS
-                                    ? tasks.filter((task) => task.name === column)
-                                    : tasks.filter((task) => task.status === column)}
+                                    ? tasks.filter((task) => task.name === columnName)
+                                    : tasks.filter((task) => task.status === columnName)}
                             />
                         ))}
                 </div>
