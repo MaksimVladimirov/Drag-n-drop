@@ -1,4 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { TaskCard } from '@/shared/ui/TaskCard/TaskCard';
@@ -15,17 +16,23 @@ interface Props {
 export const ColumnContainer = (props: Props) => {
     const { columnName, tasks, switchType } = props;
 
-    const { setNodeRef } = useSortable({
+    const { setNodeRef, transition, transform } = useSortable({
         id: columnName,
         data: {
             type: switchType,
         },
     });
 
+    const style = {
+        transition,
+        transform: CSS.Transform.toString(transform),
+    };
+
     return (
         <div
             className={classNames(cls.ColumnContainer)}
             ref={setNodeRef}
+            style={style}
         >
             <div className={classNames(cls.ColumnContainer_title)}>
                 {switchType === BoardTypeEnum.SWITCH_BETWEEN_USERS
