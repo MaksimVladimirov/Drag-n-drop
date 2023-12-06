@@ -1,6 +1,7 @@
-import { useSortable } from '@dnd-kit/sortable';
+import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
+import { useMemo } from 'react';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { TaskCard } from '@/shared/ui/TaskCard/TaskCard';
 import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
@@ -15,6 +16,7 @@ interface Props {
 
 export const ColumnContainer = (props: Props) => {
     const { columnName, tasks, switchType } = props;
+    const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
     const { setNodeRef, transition, transform } = useSortable({
         id: columnName,
@@ -41,12 +43,14 @@ export const ColumnContainer = (props: Props) => {
             </div>
 
             <div>
-                {tasks.map((task) => (
-                    <TaskCard
-                        key={task.id}
-                        task={task}
-                    />
-                ))}
+                <SortableContext items={tasksIds}>
+                    {tasks.map((task) => (
+                        <TaskCard
+                            key={task.id}
+                            task={task}
+                        />
+                    ))}
+                </SortableContext>
             </div>
         </div>
     );
