@@ -1,4 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 import { Task } from '@/app/store/KanbanStore';
 import { classNames } from '@/shared/lib/classNames/classNames';
@@ -22,7 +23,7 @@ const TaskStatusesSvgs = {
 };
 export const TaskCard = ({ task }: Props) => {
     const {
-        setNodeRef, attributes, listeners, isDragging,
+        setNodeRef, attributes, listeners, isDragging, transition, transform,
     } = useSortable({
         id: task.id,
         data: {
@@ -31,10 +32,16 @@ export const TaskCard = ({ task }: Props) => {
         },
     });
 
+    const style = {
+        transition,
+        transform: CSS.Transform.toString(transform),
+    };
+
     if (isDragging) {
         return (
             <div
                 ref={setNodeRef}
+                style={style}
                 className={classNames(cls.TaskCard__dragging)}
             />
         );
@@ -43,6 +50,7 @@ export const TaskCard = ({ task }: Props) => {
     return (
         <div
             ref={setNodeRef}
+            style={style}
             {...attributes}
             {...listeners}
             className={classNames(cls.TaskCard)}
@@ -63,5 +71,3 @@ export const TaskCard = ({ task }: Props) => {
         </div>
     );
 };
-
-export default TaskCard;

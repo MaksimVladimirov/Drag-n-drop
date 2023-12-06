@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FC } from 'react';
 
 import { moveTaskToColumn, moveTasks, setActiveTask } from '@/app/store/KanbanStore';
-import TaskCard from '@/shared/ui/TaskCard/TaskCard';
+import { TaskCard } from '@/shared/ui/TaskCard/TaskCard';
 import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
 import { classNames } from '@/shared/lib/classNames/classNames';
 import { ColumnContainer } from './ColumnContainer';

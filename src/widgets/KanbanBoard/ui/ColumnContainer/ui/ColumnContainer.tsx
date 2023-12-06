@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 
 import { classNames } from '@/shared/lib/classNames/classNames';
-import TaskCard from '@/shared/ui/TaskCard/TaskCard';
+import { TaskCard } from '@/shared/ui/TaskCard/TaskCard';
 import { BoardTypeEnum } from '@/pages/BoardPage/ui/BoardPage';
 import { Task } from '@/app/store/KanbanStore';
 import cls from './ColumnContainter.module.scss';
