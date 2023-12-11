@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { arrayMove } from '@dnd-kit/sortable';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
 import { ITask } from '@/types/Task';
+import { TaskStatusesType } from '@/types/TaskStatuses';
 
 const defaultTasks: ITask[] = [
     {
@@ -84,10 +85,12 @@ const defaultTasks: ITask[] = [
     },
 ];
 
+const defaultTaskStatuses: TaskStatusesType[] = ['Сделать', 'В работе', 'На ревью', 'Сделано'];
+
 const kanbanSlice = createSlice({
     name: 'kanban',
     initialState: {
-        statusColumns: [...new Set(defaultTasks.map((task) => task.status))],
+        statusColumns: defaultTaskStatuses,
         nameColumns: [...new Set(defaultTasks.map((task) => task.name))],
         tasks: defaultTasks,
         activeTask: null,
