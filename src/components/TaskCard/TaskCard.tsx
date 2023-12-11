@@ -7,10 +7,12 @@ import InReviewStatus from '@/assets/icons/taskStatuses/review.svg';
 import CompletedStatus from '@/assets/icons/taskStatuses/completed.svg';
 import AtWorkStatus from '@/assets/icons/taskStatuses/at_work.svg';
 import { ITaskCardProps } from './TaskCardProps';
+import { TaskStatusesType } from '@/types/TaskStatuses';
 import { classNames } from '@/lib';
+
 import cls from './TaskCard.module.scss';
 
-const TaskStatusesSvgs = {
+const TaskStatusesSvgs: Record<TaskStatusesType, string> = {
     Сделать: TodoStatus,
     'На ревью': InReviewStatus,
     Сделано: CompletedStatus,
@@ -58,7 +60,6 @@ export const TaskCard = ({ task }: ITaskCardProps) => {
             </div>
             <div className={classNames(cls.TaskCard__task_description_field)}>
                 Задание:
-                {' '}
                 {task.content}
             </div>
             <div className={classNames(cls.TaskCard__status_field)}>

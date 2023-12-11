@@ -6,6 +6,7 @@ import { classNames } from '@/lib';
 import { TaskCard } from '@/components';
 import { IColumnContainerProps } from './ColumnContainerProps';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
+
 import cls from './ColumnContainter.module.scss';
 
 export const ColumnContainer = (props: IColumnContainerProps) => {

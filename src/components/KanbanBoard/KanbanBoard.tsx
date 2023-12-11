@@ -18,14 +18,12 @@ import {
     getActiveTask, getInitialTasks, getUserNames, getUserStatuses,
 } from '@/store/selectors/kanbanBoardSelectors';
 import { classNames } from '@/lib';
+import { IKanbanBoardProps } from './KanbanBoardProps';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
+
 import cls from './KanbanBoard.module.scss';
 
-interface Props {
-    boardType: BoardTypeEnum
-}
-
-export const KanbanBoard: FC<Props> = (props) => {
+export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
     const { boardType } = props;
     const dispatch = useDispatch();
     const tasks = useSelector(getInitialTasks);
@@ -70,10 +68,10 @@ export const KanbanBoard: FC<Props> = (props) => {
 
         if (activeId === overId) return;
 
-        const isActiveATask = active.data.current?.type === 'Task';
-        const isOverATask = over.data.current?.type === 'Task';
-        const isOverAStatusColumn = over.data.current?.type === boardType;
-        const isOverANameColumn = over.data.current?.type === boardType;
+        const isActiveATask: boolean = active.data.current?.type === 'Task';
+        const isOverATask: boolean = over.data.current?.type === 'Task';
+        const isOverAStatusColumn: boolean = over.data.current?.type === boardType;
+        const isOverANameColumn: boolean = over.data.current?.type === boardType;
         if (!isActiveATask) return;
 
         if (isActiveATask && isOverATask) {

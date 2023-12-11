@@ -1,9 +1,6 @@
 import { RouteProps } from 'react-router-dom';
 import { BoardPage } from '@/pages';
-
-export enum AppRoutes {
-    MAIN = 'main',
-}
+import { AppRoutes } from '@/types/AppRouteEnum';
 
 export const RoutePath: Record<AppRoutes, string> = {
     [AppRoutes.MAIN]: '/',

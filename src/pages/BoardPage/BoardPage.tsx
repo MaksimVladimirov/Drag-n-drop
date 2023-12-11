@@ -3,6 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { KanbanBoard } from '@/components';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
 import { classNames } from '@/lib';
+
 import cls from './BoardPage.module.scss';
 
 const BoardPage = () => {

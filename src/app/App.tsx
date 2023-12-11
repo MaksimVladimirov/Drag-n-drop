@@ -1,5 +1,6 @@
 import { Sidebar } from '@/components';
 import { AppRouter } from '@/router';
+
 import './styles/index.scss';
 
 function App() {

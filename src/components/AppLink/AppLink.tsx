@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 import { IAppLinkProps } from './AppLinkProps';
 import { classNames } from '@/lib';
+
 import cls from './AppLink.module.scss';
 
 export const AppLink: FC<IAppLinkProps> = (props) => {
