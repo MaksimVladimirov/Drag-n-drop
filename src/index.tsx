@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import App from '@/app/App.tsx';
-import { store } from '@/app/store/store.ts';
+import { store } from '@/store/store';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
