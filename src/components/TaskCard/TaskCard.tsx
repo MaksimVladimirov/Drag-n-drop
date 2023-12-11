@@ -1,18 +1,14 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 
-import { Task } from '@/store/slices/kanbanBoardSlice';
-import Avatar from '@/shared/assets/icons/avatar.svg';
-import TodoStatus from '@/shared/assets/icons/taskStatuses/todo.svg';
-import InReviewStatus from '@/shared/assets/icons/taskStatuses/review.svg';
-import CompletedStatus from '@/shared/assets/icons/taskStatuses/completed.svg';
-import AtWorkStatus from '@/shared//assets/icons/taskStatuses/at_work.svg';
-import { classNames } from '@/lib/classNames';
+import Avatar from '@/assets/icons/avatar.svg';
+import TodoStatus from '@/assets/icons/taskStatuses/todo.svg';
+import InReviewStatus from '@/assets/icons/taskStatuses/review.svg';
+import CompletedStatus from '@/assets/icons/taskStatuses/completed.svg';
+import AtWorkStatus from '@/assets/icons/taskStatuses/at_work.svg';
+import { ITaskCardProps } from './TaskCardProps';
+import { classNames } from '@/lib';
 import cls from './TaskCard.module.scss';
-
-interface Props {
-    task: Task
-}
 
 const TaskStatusesSvgs = {
     Сделать: TodoStatus,
@@ -21,7 +17,8 @@ const TaskStatusesSvgs = {
     'В работе': AtWorkStatus,
 
 };
-export const TaskCard = ({ task }: Props) => {
+
+export const TaskCard = ({ task }: ITaskCardProps) => {
     const {
         setNodeRef, attributes, listeners, isDragging, transition, transform,
     } = useSortable({

@@ -13,13 +13,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FC, useMemo } from 'react';
 
 import { moveTaskToColumn, moveTasks, setActiveTask } from '@/store/slices/kanbanBoardSlice';
-import { BoardTypeEnum } from '@/pages/BoardPage/BoardPage';
-import { ColumnContainer } from '@/components/ColumnContainer/ColumnContainer';
+import { ColumnContainer, TaskCard } from '@/components';
 import {
     getActiveTask, getInitialTasks, getUserNames, getUserStatuses,
-} from '../../store/selectors/kanbanBoardSelectors';
-import { classNames } from '@/lib/classNames';
-import { TaskCard } from '../TaskCard/TaskCard';
+} from '@/store/selectors/kanbanBoardSelectors';
+import { classNames } from '@/lib';
+import { BoardTypeEnum } from '@/types/BoardTypeEnum';
 import cls from './KanbanBoard.module.scss';
 
 interface Props {

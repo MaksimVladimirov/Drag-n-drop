@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
+import { classNames } from '@/lib';
+import { Loader } from '@/components';
 import cls from './PageLoader.module.scss';
-import { classNames } from '@/lib/classNames';
-import { Loader } from '@/components/Loader/Loader';
 
 export const PageLoader: FC = () => (
     <div className={classNames(cls.PageLoader)}>

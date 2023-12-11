@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { AppLink } from '@/components';
 import cls from './Sidebar.module.scss';
-import { AppLink } from '../AppLink/AppLink';
 
 export const Sidebar: FC = () => (
     <div className={cls.Sidebar}>

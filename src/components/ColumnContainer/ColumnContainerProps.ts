@@ -1,8 +1,8 @@
-import { Task } from '@/store/slices/kanbanBoardSlice';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
+import { ITask } from '@/types/Task';
 
 export interface IColumnContainerProps {
     columnName: string;
-    tasks: Task[];
+    tasks: ITask[];
     switchType: BoardTypeEnum;
 }

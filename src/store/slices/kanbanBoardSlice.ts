@@ -1,15 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { arrayMove } from '@dnd-kit/sortable';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
+import { ITask } from '@/types/Task';
 
-export interface Task {
-    id: number;
-    status: string;
-    content: string;
-    name: string
-  }
-
-const defaultTasks: Task[] = [
+const defaultTasks: ITask[] = [
     {
         id: 1,
         status: 'Сделать',
