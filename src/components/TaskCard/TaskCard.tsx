@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChangeEvent, useState } from 'react';
+import {
+    ChangeEvent, useState, KeyboardEvent, useRef, useEffect,
+} from 'react';
 import { useDispatch } from 'react-redux';
+import { TaskParameter } from '@/components';
 import CompletedStatus from '@/assets/icons/taskStatuses/completed.svg';
 import InReviewStatus from '@/assets/icons/taskStatuses/review.svg';
 import AtWorkStatus from '@/assets/icons/taskStatuses/at_work.svg';
@@ -16,7 +19,6 @@ import Avatar from '@/assets/icons/avatar.svg';
 import { classNames } from '@/lib';
 
 import cls from './TaskCard.module.scss';
-import { TaskParameter } from '@/components/TaskParameter/TaskParameter';
 
 const TaskStatusesSvgs: Record<TaskStatusesType, string> = {
     Сделать: TodoStatus,
@@ -31,6 +33,7 @@ export const TaskCard = (props: ITaskCardProps) => {
     const [parameterText, setParameterText] = useState<string>('');
     const dispatch = useDispatch();
     const { task } = props;
+    const inputRef = useRef<HTMLInputElement | null>(null);
     const {
         setNodeRef, attributes, listeners, isDragging, transition, transform,
     } = useSortable({
@@ -71,6 +74,14 @@ export const TaskCard = (props: ITaskCardProps) => {
         setParameterText('');
     };
 
+    const onTaskParameterFieldKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            addNewTaskParameter(task.id);
+        } else if (event.key === 'Escape') {
+            clearTaskParameterField();
+        }
+    };
+
     return (
         <div
             ref={setNodeRef}
@@ -107,7 +118,8 @@ export const TaskCard = (props: ITaskCardProps) => {
             ) : (
                 <>
                     <input
-                        onChange={(event) => onTaskParameterFieldChange(event)}
+                        onKeyDown={onTaskParameterFieldKeyDown}
+                        onChange={onTaskParameterFieldChange}
                         className={classNames(cls.TaskCard__parameter_field__input)}
                     />
                     <button

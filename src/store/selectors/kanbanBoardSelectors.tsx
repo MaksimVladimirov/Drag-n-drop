@@ -1,6 +1,6 @@
 import { RootState } from '@/store/store';
 
-export const getInitialTasks = (state: RootState) => state.kanbanSlice.tasks;
-export const getActiveTask = (state: RootState) => state.kanbanSlice.activeTask;
-export const getUserStatuses = (state: RootState) => state.kanbanSlice.statusColumns;
-export const getUserNames = (state: RootState) => state.kanbanSlice.nameColumns;
+export const getInitialTasks = (state: RootState) => state.kanbanBoardSlice.tasks;
+export const getActiveTask = (state: RootState) => state.kanbanBoardSlice.activeTask;
+export const getUserStatuses = (state: RootState) => state.kanbanBoardSlice.statusColumns;
+export const getUserNames = (state: RootState) => state.kanbanBoardSlice.nameColumns;

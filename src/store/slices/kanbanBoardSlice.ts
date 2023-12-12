@@ -4,7 +4,7 @@ import { BoardTypeEnum } from '@/types/BoardTypeEnum';
 import { ITask } from '@/types/Task';
 import { TaskStatusesType } from '@/types/TaskStatuses';
 
-const defaultTasks: ITask[] = [
+export const defaultTasks: ITask[] = [
     {
         id: 1,
         status: 'Сделать',
@@ -112,7 +112,7 @@ const defaultTasks: ITask[] = [
 
 const defaultTaskStatuses: TaskStatusesType[] = ['Сделать', 'В работе', 'На ревью', 'Сделано'];
 
-const kanbanSlice = createSlice({
+const kanbanBoardSlice = createSlice({
     name: 'kanban',
     initialState: {
         statusColumns: defaultTaskStatuses,
@@ -177,6 +177,6 @@ export const {
     moveTasks,
     moveTaskToColumn,
     addNewField,
-} = kanbanSlice.actions;
+} = kanbanBoardSlice.actions;
 
-export default kanbanSlice.reducer;
+export default kanbanBoardSlice.reducer;

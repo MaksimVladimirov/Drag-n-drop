@@ -11,15 +11,14 @@ import {
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FC, useMemo } from 'react';
-
 import { moveTaskToColumn, moveTasks, setActiveTask } from '@/store/slices/kanbanBoardSlice';
 import { ColumnContainer, TaskCard } from '@/components';
 import {
     getActiveTask, getInitialTasks, getUserNames, getUserStatuses,
 } from '@/store/selectors/kanbanBoardSelectors';
-import { classNames } from '@/lib';
 import { IKanbanBoardProps } from './KanbanBoardProps';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
+import { classNames } from '@/lib';
 
 import cls from './KanbanBoard.module.scss';
 

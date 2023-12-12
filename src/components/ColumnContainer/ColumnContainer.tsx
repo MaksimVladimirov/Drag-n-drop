@@ -1,11 +1,10 @@
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useMemo } from 'react';
-
-import { classNames } from '@/lib';
-import { TaskCard } from '@/components';
 import { IColumnContainerProps } from './ColumnContainerProps';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
+import { TaskCard } from '@/components';
+import { classNames } from '@/lib';
 
 import cls from './ColumnContainter.module.scss';
 

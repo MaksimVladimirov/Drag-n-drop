@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
-
 import { IAppLinkProps } from './AppLinkProps';
 import { classNames } from '@/lib';
 
