@@ -5,5 +5,5 @@ export interface ITask {
     status: TaskStatusesType;
     content: string;
     name: string;
-    parameters?: []
+    parameters: string[]
 }

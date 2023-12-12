@@ -9,6 +9,10 @@
     padding: 5px;
     margin: 10px;
     cursor:grab;
+    &__line {
+        margin-top: 10px;
+        width: 180px;
+    }
     &__dragging {
         border: 1px solid var(--secondary-color);
         border-radius: var(--border-radius);

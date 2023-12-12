@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { arrayMove } from '@dnd-kit/sortable';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
 import { ITask } from '@/types/Task';
@@ -159,11 +159,11 @@ const kanbanSlice = createSlice({
             }
         },
 
-        addNewField: (state, action) => {
+        addNewField: (state, action:PayloadAction<{parameterText:string, id: number}>) => {
             const { parameterText, id } = action.payload;
             if (parameterText === '') return;
             const activeIndex = state.tasks.findIndex((task) => task.id === id);
-            state.tasks[activeIndex].parameters?.push(parameterText);
+            state.tasks[activeIndex].parameters.push(parameterText);
         },
 
     },
