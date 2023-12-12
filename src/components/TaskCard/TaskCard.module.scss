@@ -9,10 +9,6 @@
     padding: 5px;
     margin: 10px;
     cursor:grab;
-    &__line {
-        margin-top: 10px;
-        width: 180px;
-    }
     &__dragging {
         border: 1px solid var(--secondary-color);
         border-radius: var(--border-radius);
@@ -46,7 +42,7 @@
         right: 5px;
         width: 20px;
         height: 20px;
-        border: 1px solid #908484;
+        border: 1px solid #aba5a5;
         border-radius: var(--border-radius);
     }
     &__add_field_text {

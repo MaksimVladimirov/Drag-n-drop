@@ -1,11 +1,8 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import Avatar from '@/assets/icons/avatar.svg';
 import CompletedStatus from '@/assets/icons/taskStatuses/completed.svg';
 import InReviewStatus from '@/assets/icons/taskStatuses/review.svg';
 import AtWorkStatus from '@/assets/icons/taskStatuses/at_work.svg';
@@ -13,8 +10,9 @@ import TodoStatus from '@/assets/icons/taskStatuses/todo.svg';
 import { addNewField } from '@/store/slices/kanbanBoardSlice';
 import { TaskStatusesType } from '@/types/TaskStatuses';
 import CheckMark from '@/assets/icons/check-mark.svg';
-import TrashIcon from '@/assets/icons/trash-ico.svg';
+import ResetIcon from '@/assets/icons/reset.svg';
 import { ITaskCardProps } from './TaskCardProps';
+import Avatar from '@/assets/icons/avatar.svg';
 import { classNames } from '@/lib';
 
 import cls from './TaskCard.module.scss';
@@ -93,10 +91,9 @@ export const TaskCard = (props: ITaskCardProps) => {
                 <p className={classNames(cls.TaskCard__status_field__title)}>{task.status}</p>
                 <img src={TaskStatusesSvgs[task.status as keyof typeof TaskStatusesSvgs]} alt="" />
             </div>
-            <hr className={classNames(cls.TaskCard__line)} />
 
             {task.parameters && task.parameters?.map((parameter) => (
-                <TaskParameter parameter={parameter} />
+                <TaskParameter key={parameter.paramId} parameterText={parameter.paramText} />
             ))}
 
             {!taskParameterFieldIsOpen ? (
@@ -120,7 +117,7 @@ export const TaskCard = (props: ITaskCardProps) => {
                         <img src={CheckMark} alt="" />
                     </button>
                     <button onClick={clearTaskParameterField} type="button">
-                        <img src={TrashIcon} alt="" />
+                        <img src={ResetIcon} alt="" />
                     </button>
                 </>
             )}

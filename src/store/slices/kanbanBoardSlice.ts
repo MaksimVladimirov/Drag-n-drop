@@ -163,7 +163,9 @@ const kanbanSlice = createSlice({
             const { parameterText, id } = action.payload;
             if (parameterText === '') return;
             const activeIndex = state.tasks.findIndex((task) => task.id === id);
-            state.tasks[activeIndex].parameters.push(parameterText);
+            state.tasks[activeIndex].parameters.push(
+                { paramId: state.tasks[activeIndex].parameters.length + 1, paramText: parameterText },
+            );
         },
 
     },

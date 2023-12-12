@@ -1,3 +1,3 @@
 export interface ITaskParameterProps {
-    parameter: string;
+    parameterText: string;
 }
