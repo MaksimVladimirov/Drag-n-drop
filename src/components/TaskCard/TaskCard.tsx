@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import {
-    ChangeEvent, useState, KeyboardEvent, useRef,
-} from 'react';
+import { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskParameter } from '@/components';
 import CompletedStatus from '@/assets/icons/taskStatuses/completed.svg';
@@ -33,7 +31,6 @@ export const TaskCard = (props: ITaskCardProps) => {
     const [parameterText, setParameterText] = useState<string>('');
     const dispatch = useDispatch();
     const { task } = props;
-    const inputRef = useRef<HTMLInputElement | null>(null);
     const {
         setNodeRef, attributes, listeners, isDragging, transition, transform,
     } = useSortable({
