@@ -11,7 +11,7 @@ import cls from './ColumnContainter.module.scss';
 
 export const ColumnContainer = (props: IColumnContainerProps) => {
     const { columnName, tasks, switchType } = props;
-    const tasksIds = useMemo(() => tasks.map((task) => task.id), [tasks]);
+    const tasksIds: number[] = useMemo(() => tasks.map((task) => task.id), [tasks]);
 
     const { setNodeRef, transition, transform } = useSortable({
         id: columnName,

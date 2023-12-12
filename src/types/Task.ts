@@ -1,6 +1,9 @@
+import { TaskStatusesType } from './TaskStatuses';
+
 export interface ITask {
     id: number;
-    status: string;
+    status: TaskStatusesType;
     content: string;
-    name: string
+    name: string;
+    parameters?: []
 }
