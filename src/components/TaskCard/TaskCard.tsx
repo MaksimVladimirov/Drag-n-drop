@@ -2,7 +2,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import {
-    ChangeEvent, useState, KeyboardEvent, useRef, useEffect,
+    ChangeEvent, useState, KeyboardEvent, useRef,
 } from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskParameter } from '@/components';
