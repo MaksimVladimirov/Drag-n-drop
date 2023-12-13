@@ -1,9 +1,5 @@
+import { TaskParameters } from './TaskParameters';
 import { TaskStatusesType } from './TaskStatuses';
-
-export interface TaskParameters {
-    paramId: number,
-    paramText: string
-}
 
 export interface ITask {
     id: number;

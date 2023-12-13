@@ -25,26 +25,28 @@ export const ColumnContainer = (props: IColumnContainerProps) => {
     };
 
     return (
-        <div
-            className={classNames(cls.ColumnContainer)}
-            ref={setNodeRef}
-            style={style}
-        >
-            <div className={classNames(cls.ColumnContainer_title)}>
-                {switchType === BoardTypeEnum.SWITCH_BETWEEN_USERS
-                    && 'Задачи пользователя '}
-                <span>{columnName}</span>
-            </div>
+        <div>
+            <div
+                className={classNames(cls.ColumnContainer)}
+                ref={setNodeRef}
+                style={style}
+            >
+                <div className={classNames(cls.ColumnContainer_title)}>
+                    {switchType === BoardTypeEnum.SWITCH_BETWEEN_USERS
+                        ? 'Задачи пользователя: ' : 'Задачи в статусе: '}
+                    <span>{columnName}</span>
+                </div>
 
-            <div>
-                <SortableContext items={tasksIds}>
-                    {tasks.map((task) => (
-                        <TaskCard
-                            key={task.id}
-                            task={task}
-                        />
-                    ))}
-                </SortableContext>
+                <div>
+                    <SortableContext items={tasksIds}>
+                        {tasks.map((task) => (
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                            />
+                        ))}
+                    </SortableContext>
+                </div>
             </div>
         </div>
     );

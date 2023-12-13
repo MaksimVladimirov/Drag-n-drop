@@ -52,6 +52,8 @@ export const TaskCard = (props: ITaskCardProps) => {
                 ref={setNodeRef}
                 style={style}
                 className={classNames(cls.TaskCard__dragging)}
+                {...attributes}
+                {...listeners}
             />
         );
     }
@@ -92,8 +94,7 @@ export const TaskCard = (props: ITaskCardProps) => {
                 <img src={Avatar} alt="" />
             </div>
             <div className={classNames(cls.TaskCard__task_description_field)}>
-                Задание:
-                {task.content}
+                {`Задание: ${task.content}`}
             </div>
             <div className={classNames(cls.TaskCard__status_field)}>
                 <p className={classNames(cls.TaskCard__status_field__title)}>{task.status}</p>

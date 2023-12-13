@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-no-bind */
 import {
     DndContext,
-    type DragOverEvent,
     DragOverlay,
     type DragStartEvent,
     PointerSensor,
     useSensor,
     useSensors,
+    DragEndEvent,
 } from '@dnd-kit/core';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,11 +54,7 @@ export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
         }
     }
 
-    function onDragEnd() {
-        dispatch(setActiveTask(null));
-    }
-
-    function onDragOver(event: DragOverEvent) {
+    function onDragEnd(event: DragEndEvent) {
         const { active, over } = event;
         if (!over) return;
 
@@ -80,6 +76,7 @@ export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
         if (isActiveATask && (isOverAStatusColumn || isOverANameColumn)) {
             dispatch(moveTaskToColumn({ activeId, overId, boardType }));
         }
+        dispatch(setActiveTask(null));
     }
 
     return (
@@ -88,7 +85,6 @@ export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
                 sensors={sensors}
                 onDragStart={onDragStart}
                 onDragEnd={onDragEnd}
-                onDragOver={onDragOver}
             >
                 <div className={classNames(cls.KanbanBoard_container)}>
                     {(boardType === BoardTypeEnum.SWITCH_BETWEEN_STATUSES

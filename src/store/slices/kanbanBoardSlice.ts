@@ -157,6 +157,7 @@ const kanbanBoardSlice = createSlice({
             } else if (boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS) {
                 state.tasks[activeIndex].name = overId;
             }
+            state.tasks = arrayMove(state.tasks, activeIndex, activeIndex);
         },
 
         addNewField: (state, action:PayloadAction<{parameterText:string, id: number}>) => {
