@@ -41,9 +41,9 @@ export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
     const filterTasksByColumnName = useMemo(() => (columnName: string) => {
         let filteredTasks = null;
         if (boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS) {
-            filteredTasks = tasks.filter((task) => task.name === columnName);
+            filteredTasks = tasks.filter((task) => task.userName === columnName);
         } else {
-            filteredTasks = tasks.filter((task) => task.status === columnName);
+            filteredTasks = tasks.filter((task) => task.taskStatus === columnName);
         }
         return filteredTasks;
     }, [boardType, tasks]);

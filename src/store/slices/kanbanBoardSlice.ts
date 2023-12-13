@@ -1,123 +1,15 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { arrayMove } from '@dnd-kit/sortable';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
-import { ITask } from '@/types/Task';
-import { TaskStatusesType } from '@/types/TaskStatuses';
-
-export const defaultTasks: ITask[] = [
-    {
-        id: 1,
-        status: 'Сделать',
-        content: 'Покрасить кнопку',
-        name: 'Samantha Davis',
-        parameters: [],
-    },
-    {
-        id: 2,
-        status: 'Сделать',
-        content: 'Редизайн в соответсвии с Figma',
-        name: 'Samantha Davis',
-        parameters: [],
-
-    },
-    {
-        id: 3,
-        status: 'В работе',
-        content: 'Типизация данных',
-        name: 'John Smith',
-        parameters: [],
-
-    },
-    {
-        id: 4,
-        status: 'На ревью',
-        content: 'Изменить шрифты',
-        name: 'John Smith',
-        parameters: [],
-
-    },
-    {
-        id: 5,
-        status: 'Сделано',
-        content: 'Вынести в глобальные переменные',
-        name: 'Samantha Davis',
-        parameters: [],
-
-    },
-    {
-        id: 6,
-        status: 'На ревью',
-        content: 'Настроить линтер',
-        name: 'Robert Pattinson',
-        parameters: [],
-
-    },
-    {
-        id: 7,
-        status: 'Сделано',
-        content: 'Настроить prettier',
-        name: 'John Smith',
-        parameters: [],
-
-    },
-    {
-        id: 8,
-        status: 'Сделать',
-        content: 'Получение данных с бэка',
-        name: 'Robert Pattinson',
-        parameters: [],
-
-    },
-    {
-        id: 9,
-        status: 'Сделать',
-        content: 'Исправить местополодение пользователя',
-        name: 'Bruce Wayne',
-        parameters: [],
-
-    },
-    {
-        id: 10,
-        status: 'На ревью',
-        content: 'Сдвинуть кнопку на 10px',
-        name: 'Robert Pattinson',
-        parameters: [],
-
-    },
-    {
-        id: 11,
-        status: 'На ревью',
-        content: 'Покрасить кнопку',
-        name: 'John Smith',
-        parameters: [],
-
-    },
-    {
-        id: 12,
-        status: 'В работе',
-        content: 'Рефакторинг страницы',
-        name: 'John Smith',
-        parameters: [],
-
-    },
-    {
-        id: 13,
-        status: 'В работе',
-        content: 'Исправления после тестирования',
-        name: 'Bruce Wayne',
-        parameters: [],
-
-    },
-];
-
-const defaultTaskStatuses: TaskStatusesType[] = ['Сделать', 'В работе', 'На ревью', 'Сделано'];
+import { taskStatuses } from '@/data/taskStatuses';
+import { tasks } from '@/data/tasks';
 
 const kanbanBoardSlice = createSlice({
     name: 'kanban',
     initialState: {
-        statusColumns: defaultTaskStatuses,
-        nameColumns: [...new Set(defaultTasks.map((task) => task.name))],
-        tasks: defaultTasks,
+        statusColumns: taskStatuses,
+        nameColumns: [...new Set(tasks.map((task) => task.userName))],
+        tasks,
         activeTask: null,
     },
     reducers: {
@@ -129,19 +21,19 @@ const kanbanBoardSlice = createSlice({
         },
         moveTasks: (state, action) => {
             const { activeId, overId, boardType } = action.payload;
-            const activeIndex = state.tasks.findIndex((task) => task.id === activeId);
-            const overIndex = state.tasks.findIndex((task) => task.id === overId);
+            const activeIndex = state.tasks.findIndex((task) => task.taskId === activeId);
+            const overIndex = state.tasks.findIndex((task) => task.taskId === overId);
 
             if (boardType === BoardTypeEnum.SWITCH_BETWEEN_STATUSES) {
-                if (state.tasks[activeIndex].status !== state.tasks[overIndex].status) {
-                    state.tasks[activeIndex].status = state.tasks[overIndex].status;
+                if (state.tasks[activeIndex].taskStatus !== state.tasks[overIndex].taskStatus) {
+                    state.tasks[activeIndex].taskStatus = state.tasks[overIndex].taskStatus;
                     state.tasks = arrayMove(state.tasks, activeIndex, overIndex - 1);
                 } else {
                     state.tasks = arrayMove(state.tasks, activeIndex, overIndex);
                 }
             } else if (boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS) {
-                if (state.tasks[activeIndex].name !== state.tasks[overIndex].name) {
-                    state.tasks[activeIndex].name = state.tasks[overIndex].name;
+                if (state.tasks[activeIndex].userName !== state.tasks[overIndex].userName) {
+                    state.tasks[activeIndex].userName = state.tasks[overIndex].userName;
                     state.tasks = arrayMove(state.tasks, activeIndex, overIndex - 1);
                 } else {
                     state.tasks = arrayMove(state.tasks, activeIndex, overIndex);
@@ -151,11 +43,11 @@ const kanbanBoardSlice = createSlice({
 
         moveTaskToColumn: (state, action) => {
             const { activeId, overId, boardType } = action.payload;
-            const activeIndex = state.tasks.findIndex((task) => task.id === activeId);
+            const activeIndex = state.tasks.findIndex((task) => task.taskId === activeId);
             if (boardType === BoardTypeEnum.SWITCH_BETWEEN_STATUSES) {
-                state.tasks[activeIndex].status = overId;
+                state.tasks[activeIndex].taskStatus = overId;
             } else if (boardType === BoardTypeEnum.SWITCH_BETWEEN_USERS) {
-                state.tasks[activeIndex].name = overId;
+                state.tasks[activeIndex].userName = overId;
             }
             state.tasks = arrayMove(state.tasks, activeIndex, activeIndex);
         },
@@ -163,10 +55,22 @@ const kanbanBoardSlice = createSlice({
         addNewField: (state, action:PayloadAction<{parameterText:string, id: number}>) => {
             const { parameterText, id } = action.payload;
             if (parameterText === '') return;
-            const activeIndex = state.tasks.findIndex((task) => task.id === id);
+            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
             state.tasks[activeIndex].parameters.push(
                 { paramId: state.tasks[activeIndex].parameters.length + 1, paramText: parameterText },
             );
+        },
+
+        addTaskPriority: (state, action:PayloadAction<{selectedTaskPriority:string, id: number}>) => {
+            const { selectedTaskPriority, id } = action.payload;
+            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
+            state.tasks[activeIndex].taskPriority = selectedTaskPriority;
+        },
+
+        addTaskComment: (state, action:PayloadAction<{comment:string, id: number}>) => {
+            const { comment, id } = action.payload;
+            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
+            state.tasks[activeIndex].comment = comment;
         },
 
     },
@@ -178,6 +82,8 @@ export const {
     moveTasks,
     moveTaskToColumn,
     addNewField,
+    addTaskPriority,
+    addTaskComment,
 } = kanbanBoardSlice.actions;
 
 export default kanbanBoardSlice.reducer;
