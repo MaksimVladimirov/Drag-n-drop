@@ -81,6 +81,7 @@ export const TaskCard = (props: ITaskCardProps) => {
     };
 
     const handleDatePickerChange = (date: any, dateString: string) => {
+        console.log(date);
         const id = task.taskId;
         dispatch(addTaskDeadline({ dateString, id }));
         setAddingParam('');
