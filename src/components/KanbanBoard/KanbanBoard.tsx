@@ -24,11 +24,11 @@ import cls from './KanbanBoard.module.scss';
 
 export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
     const { boardType } = props;
-    const dispatch = useDispatch();
-    const tasks = useSelector(getInitialTasks);
-    const activeTask = useSelector(getActiveTask);
     const userStatusesColumns = useSelector(getUserStatuses);
     const userNamesColumns = useSelector(getUserNames);
+    const activeTask = useSelector(getActiveTask);
+    const tasks = useSelector(getInitialTasks);
+    const dispatch = useDispatch();
 
     const sensors = useSensors(
         useSensor(PointerSensor, {

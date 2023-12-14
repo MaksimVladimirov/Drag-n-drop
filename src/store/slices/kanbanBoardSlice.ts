@@ -13,6 +13,7 @@ const kanbanBoardSlice = createSlice({
         activeTask: null,
     },
     reducers: {
+        // Передвижение карточек задач
         setActiveTask: (state, action) => {
             state.activeTask = action.payload;
         },
@@ -52,15 +53,7 @@ const kanbanBoardSlice = createSlice({
             state.tasks = arrayMove(state.tasks, activeIndex, activeIndex);
         },
 
-        addNewField: (state, action:PayloadAction<{parameterText:string, id: number}>) => {
-            const { parameterText, id } = action.payload;
-            if (parameterText === '') return;
-            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
-            state.tasks[activeIndex].parameters.push(
-                { paramId: state.tasks[activeIndex].parameters.length + 1, paramText: parameterText },
-            );
-        },
-
+        // Добавляем дополнительные параметры задачи
         addTaskPriority: (state, action:PayloadAction<{selectedTaskPriority:string, id: number}>) => {
             const { selectedTaskPriority, id } = action.payload;
             const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
@@ -88,7 +81,6 @@ export const {
     setTasks,
     moveTasks,
     moveTaskToColumn,
-    addNewField,
     addTaskPriority,
     addTaskComment,
     addTaskDeadline,
