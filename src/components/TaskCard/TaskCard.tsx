@@ -1,34 +1,34 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChangeEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
-import { addTaskPriority, addTaskComment, addTaskDeadline } from '@/store/slices/kanbanBoardSlice';
-import CheckMark from '@/assets/icons/check-mark.svg';
-import ResetIcon from '@/assets/icons/reset.svg';
+// import { ChangeEvent, useState } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { DatePicker } from 'antd';
+// import dayjs from 'dayjs';
+// import { addTaskPriority, addTaskComment, addTaskDeadline } from '@/store/slices/kanbanBoardSlice';
+// import CheckMark from '@/assets/icons/check-mark.svg';
+// import ResetIcon from '@/assets/icons/reset.svg';
 import { ITaskCardProps } from './TaskCardProps';
 import Avatar from '@/assets/icons/avatar.svg';
 import { classNames } from '@/lib';
-import { AddingTaskParameters } from '@/types/AddingTaskParametersEnum';
+// import { AddingTaskParameters } from '@/types/AddingTaskParametersEnum';
 import { TaskStatusesSvgs } from './taskObjects/TaskStatusesSvgs';
 import { TaskPrioritiesSvgs } from './taskObjects/TaskPrioritiesSvgs';
 
 import cls from './TaskCard.module.scss';
 
-const options = [
-    { value: AddingTaskParameters.ADD_COMMENT, label: 'Добавить комментарий' },
-    { value: AddingTaskParameters.ADD_DEADLINE, label: 'Добавить дэдлайн' },
-    { value: AddingTaskParameters.ADD_PRIORITY, label: 'Добавить приоритетность' },
-];
+// const options = [
+//     { value: AddingTaskParameters.ADD_COMMENT, label: 'Добавить комментарий' },
+//     { value: AddingTaskParameters.ADD_DEADLINE, label: 'Добавить дэдлайн' },
+//     { value: AddingTaskParameters.ADD_PRIORITY, label: 'Добавить приоритетность' },
+// ];
 
 export const TaskCard = (props: ITaskCardProps) => {
-    const [taskParameterFieldIsOpen, setTaskParameterFieldIsOpen] = useState<boolean>(false);
-    const [comment, setComment] = useState<string>('');
-    const [addingParam, setAddingParam] = useState<AddingTaskParameters | string>('');
-    const dispatch = useDispatch();
-    const { task } = props;
+    // const [taskParameterFieldIsOpen, setTaskParameterFieldIsOpen] = useState<boolean>(false);
+    // const [comment, setComment] = useState<string>('');
+    // const [addingParam, setAddingParam] = useState<AddingTaskParameters | string>('');
+    // const dispatch = useDispatch();
+    const { task, taskParametersToDisplay } = props;
     const {
         setNodeRef, attributes, listeners, isDragging, transition, transform,
     } = useSortable({
@@ -56,39 +56,58 @@ export const TaskCard = (props: ITaskCardProps) => {
             />
         );
     }
+    // const showTaskParametersSelect = () => {
+    //     setComment('');
+    //     setAddingParam('');
+    //     setTaskParameterFieldIsOpen((prev) => !prev);
+    // };
 
-    const showTaskParametersSelect = () => {
-        setComment('');
-        setAddingParam('');
-        setTaskParameterFieldIsOpen((prev) => !prev);
-    };
+    // const addNewTaskParameter = (selectedAddingParam: AddingTaskParameters) => {
+    //     setTaskParameterFieldIsOpen((prev) => !prev);
+    //     setAddingParam(selectedAddingParam);
+    // };
 
-    const addNewTaskParameter = (selectedAddingParam: AddingTaskParameters) => {
-        setTaskParameterFieldIsOpen((prev) => !prev);
-        setAddingParam(selectedAddingParam);
-    };
+    // const handlePriorityChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    //     const selectedTaskPriority = event.target.value;
+    //     const id = task.taskId;
+    //     dispatch(addTaskPriority({ selectedTaskPriority, id }));
+    //     setAddingParam('');
+    // };
 
-    const handlePriorityChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        const selectedTaskPriority = event.target.value;
-        const id = task.taskId;
-        dispatch(addTaskPriority({ selectedTaskPriority, id }));
-        setAddingParam('');
-    };
+    // const handleCommentChange = () => {
+    //     const id = task.taskId;
+    //     dispatch(addTaskComment({ comment, id }));
+    //     setAddingParam('');
+    // };
 
-    const handleCommentChange = () => {
-        const id = task.taskId;
-        dispatch(addTaskComment({ comment, id }));
-        setAddingParam('');
-    };
+    // const handleDatePickerChange = (_date: dayjs.Dayjs | null, dateString: string) => {
+    //     const id = task.taskId;
+    //     console.log(dateString);
+    //     dispatch(addTaskDeadline({ dateString, id }));
+    //     setAddingParam('');
+    // };
 
-    const handleDatePickerChange = (_date: dayjs.Dayjs | null, dateString: string) => {
-        const id = task.taskId;
-        dispatch(addTaskDeadline({ dateString, id }));
-        setAddingParam('');
-    };
+    // const clearTaskParameterField = () => {
+    //     setComment('');
+    // };
 
-    const clearTaskParameterField = () => {
-        setComment('');
+    const taskParametersToDisplayMap = {
+        deadlines: (
+            <div className={classNames(cls.TaskCard__deadline_field)}>
+                {`Сделать до ${task.deadline}`}
+            </div>
+        ),
+        priority: (
+            <div className={classNames(cls.TaskCard__priority_field)}>
+                <img src={TaskPrioritiesSvgs[task.taskPriority as keyof typeof TaskPrioritiesSvgs]} alt="" />
+                {`Приоритетность ${task.taskPriority}`}
+            </div>
+        ),
+        comments: (
+            <div className={classNames(cls.TaskCard__comment_field)}>
+                {task.comment}
+            </div>
+        ),
     };
 
     return (
@@ -112,15 +131,17 @@ export const TaskCard = (props: ITaskCardProps) => {
                 <img src={TaskStatusesSvgs[task.taskStatus as keyof typeof TaskStatusesSvgs]} alt="" />
             </div>
 
+            {/* Отображаем управляемые параметры задачи */ }
+            {Object.entries(taskParametersToDisplayMap).map(([param, element]) => (
+                taskParametersToDisplay.includes(param) && element))}
+
             {/* Комментарии к задаче */}
-            {task.comment && (
-                <div className={classNames(cls.TaskCard__comment_field)}>
-                    {task.comment}
-                </div>
-            )}
+            {/* {task.comment && (
+
+            )} */}
 
             {/* Добавления нового параметра к задаче */}
-            {(addingParam === AddingTaskParameters.ADD_PRIORITY && !task.taskPriority) && (
+            {/* {(addingParam === AddingTaskParameters.ADD_PRIORITY && !task.taskPriority) && (
                 <select onChange={handlePriorityChange}>
                     <option value="" disabled selected hidden>Приоритетность</option>
                     <option value="низкая">Низкая</option>
@@ -128,9 +149,9 @@ export const TaskCard = (props: ITaskCardProps) => {
                     <option value="высокая">Высокая</option>
 
                 </select>
-            )}
+            )} */}
 
-            {(addingParam === AddingTaskParameters.ADD_DEADLINE && !task.deadline) && (
+            {/* {(addingParam === AddingTaskParameters.ADD_DEADLINE && !task.deadline) && (
                 <DatePicker size="small" onChange={handleDatePickerChange} />
             )}
 
@@ -152,33 +173,33 @@ export const TaskCard = (props: ITaskCardProps) => {
                         <img src={ResetIcon} alt="" />
                     </button>
                 </>
-            )}
+            )} */}
 
             {/* Сроки выполнения */}
-            {task.deadline && (
+            {/* {task.deadline && (
                 <div className={classNames(cls.TaskCard__deadline_field)}>
                     {`Сделать до ${task.deadline}`}
                 </div>
-            )}
+            )} */}
 
             {/* Приоритетность задачи */}
-            {task.taskPriority && (
+            {/* {task.taskPriority && (
                 <div className={classNames(cls.TaskCard__priority_field)}>
                     <img src={TaskPrioritiesSvgs[task.taskPriority as keyof typeof TaskPrioritiesSvgs]} alt="" />
                     {`Приоритетность ${task.taskPriority}`}
                 </div>
-            )}
+            )} */}
 
-            <button
+            {/* <button
                 type="button"
                 onClick={showTaskParametersSelect}
                 className={classNames(cls.TaskCard__show_parameters)}
             >
                 +
-            </button>
+            </button> */}
 
             {/* Список параметров для добавления */}
-            {taskParameterFieldIsOpen && (
+            {/* {taskParameterFieldIsOpen && (
                 <div className={classNames(cls.TaskCard__parameters_option)}>
                     {options.map((option) => (
                         <button
@@ -191,7 +212,7 @@ export const TaskCard = (props: ITaskCardProps) => {
                         </button>
                     ))}
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

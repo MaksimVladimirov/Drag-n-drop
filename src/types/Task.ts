@@ -1,4 +1,3 @@
-import { TaskParameters } from './TaskParameters';
 import { TaskStatusesType } from './TaskStatuses';
 
 export interface ITask {
@@ -6,7 +5,6 @@ export interface ITask {
     taskStatus: TaskStatusesType;
     taskDescription: string;
     userName: string;
-    parameters: TaskParameters[];
     deadline?: string;
     taskPriority?: string;
     comment?: string

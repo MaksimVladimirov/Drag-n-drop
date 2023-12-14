@@ -1,10 +1,13 @@
 .BoardPage {
+    display: flex;
+    flex-direction: column;
     &_title {
         color: var(--primary-color);
     }
     &_select {
         margin-top: 20px;
         border-radius: var(--border-radius);
+        width: min-content;
     }
     
 }

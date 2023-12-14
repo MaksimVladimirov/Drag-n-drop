@@ -6,14 +6,18 @@ export const tasks: ITask[] = [
         taskStatus: 'Сделать',
         taskDescription: 'Покрасить кнопку',
         userName: 'Samantha Davis',
-        parameters: [],
+        deadline: '2023-12-15',
+        taskPriority: 'высокая',
+        comment: 'уточнить у дизайнера по цветам',
     },
     {
         taskId: 2,
         taskStatus: 'Сделать',
         taskDescription: 'Редизайн в соответсвии с Figma',
         userName: 'Samantha Davis',
-        parameters: [],
+        deadline: '2023-12-20',
+        taskPriority: 'средняя',
+        comment: 'уточнить у дизайнера',
 
     },
     {
@@ -21,7 +25,9 @@ export const tasks: ITask[] = [
         taskStatus: 'В работе',
         taskDescription: 'Типизация данных',
         userName: 'John Smith',
-        parameters: [],
+        deadline: '2023-12-19',
+        taskPriority: 'средняя',
+        comment: 'обратиться к документации',
 
     },
     {
@@ -29,7 +35,9 @@ export const tasks: ITask[] = [
         taskStatus: 'На ревью',
         taskDescription: 'Изменить шрифты',
         userName: 'John Smith',
-        parameters: [],
+        deadline: '2023-12-14',
+        taskPriority: 'низкая',
+        comment: 'скачать шрифты',
 
     },
     {
@@ -37,7 +45,9 @@ export const tasks: ITask[] = [
         taskStatus: 'Сделано',
         taskDescription: 'Вынести в глобальные переменные',
         userName: 'Samantha Davis',
-        parameters: [],
+        deadline: '2023-12-18',
+        taskPriority: 'высокая',
+        comment: 'почитать про CSS',
 
     },
     {
@@ -45,7 +55,9 @@ export const tasks: ITask[] = [
         taskStatus: 'На ревью',
         taskDescription: 'Настроить линтер',
         userName: 'Robert Pattinson',
-        parameters: [],
+        deadline: '2023-12-16',
+        taskPriority: 'низкая',
+        comment: 'обратиться к документации',
 
     },
     {
@@ -53,7 +65,9 @@ export const tasks: ITask[] = [
         taskStatus: 'Сделано',
         taskDescription: 'Настроить prettier',
         userName: 'John Smith',
-        parameters: [],
+        deadline: '2023-12-15',
+        taskPriority: 'высокая',
+        comment: 'обратиться к документации',
 
     },
     {
@@ -61,15 +75,19 @@ export const tasks: ITask[] = [
         taskStatus: 'Сделать',
         taskDescription: 'Получение данных с бэка',
         userName: 'Robert Pattinson',
-        parameters: [],
+        deadline: '2023-12-15',
+        taskPriority: 'средняя',
+        comment: 'связаться к тимлидом',
 
     },
     {
         taskId: 9,
         taskStatus: 'Сделать',
-        taskDescription: 'Исправить местополодение пользователя',
+        taskDescription: 'Исправить местоположение пользователя',
         userName: 'Bruce Wayne',
-        parameters: [],
+        deadline: '2023-12-15',
+        taskPriority: 'высокая',
+        comment: 'обратиться к картографу',
 
     },
     {
@@ -77,7 +95,9 @@ export const tasks: ITask[] = [
         taskStatus: 'На ревью',
         taskDescription: 'Сдвинуть кнопку на 10px',
         userName: 'Robert Pattinson',
-        parameters: [],
+        deadline: '2023-12-15',
+        taskPriority: 'низкая',
+        comment: 'взять линейку',
 
     },
     {
@@ -85,7 +105,9 @@ export const tasks: ITask[] = [
         taskStatus: 'На ревью',
         taskDescription: 'Покрасить кнопку',
         userName: 'John Smith',
-        parameters: [],
+        deadline: '2023-12-19',
+        taskPriority: 'высокая',
+        comment: 'связаться с дизайнером',
 
     },
     {
@@ -93,7 +115,9 @@ export const tasks: ITask[] = [
         taskStatus: 'В работе',
         taskDescription: 'Рефакторинг страницы',
         userName: 'John Smith',
-        parameters: [],
+        deadline: '2023-12-17',
+        taskPriority: 'низкая',
+        comment: 'уточнить у дизайнера по цветам',
 
     },
     {
@@ -101,7 +125,9 @@ export const tasks: ITask[] = [
         taskStatus: 'В работе',
         taskDescription: 'Исправления после тестирования',
         userName: 'Bruce Wayne',
-        parameters: [],
+        deadline: '2023-12-18',
+        taskPriority: 'средняя',
+        comment: 'связаться с тестировщиком',
 
     },
 ];

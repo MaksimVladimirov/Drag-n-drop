@@ -5,4 +5,5 @@ export interface IColumnContainerProps {
     columnName: string;
     tasks: ITask[];
     switchType: BoardTypeEnum;
+    taskParametersToDisplay: string[]
 }

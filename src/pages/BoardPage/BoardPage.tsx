@@ -8,9 +8,18 @@ import cls from './BoardPage.module.scss';
 
 const BoardPage = () => {
     const [boardType, setBoardType] = useState<BoardTypeEnum>(BoardTypeEnum.SWITCH_BETWEEN_USERS);
-
+    const [taskParametersToDisplay, setTaskParametersToDisplay] = useState<string[]>([]);
     const handleChangeBoardType = (e: ChangeEvent<HTMLSelectElement>) => {
         setBoardType(e.target.value as BoardTypeEnum);
+    };
+
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { value } = e.target;
+        if (taskParametersToDisplay.includes(value)) {
+            setTaskParametersToDisplay(taskParametersToDisplay.filter((taskParameter) => taskParameter !== value));
+        } else {
+            setTaskParametersToDisplay([...taskParametersToDisplay, value]);
+        }
     };
 
     return (
@@ -20,7 +29,37 @@ const BoardPage = () => {
                 <option value="switchingBetweenUsers">Переключение между пользователями</option>
                 <option value="switchingBetweenStatuses">Переключение между статусами</option>
             </select>
-            <KanbanBoard boardType={boardType} />
+
+            <div className={classNames(cls.BoardPage_checkboxGroup)}>
+                <div>
+                    <input
+                        type="checkbox"
+                        value="comments"
+                        checked={taskParametersToDisplay.includes('comments')}
+                        onChange={handleCheckboxChange}
+                    />
+                    Отобразить комментарии задач
+                </div>
+                <div>
+                    <input
+                        type="checkbox"
+                        value="deadlines"
+                        checked={taskParametersToDisplay.includes('deadlines')}
+                        onChange={handleCheckboxChange}
+                    />
+                    Отобразить сроки выполнения задач
+                </div>
+                <div>
+                    <input
+                        type="checkbox"
+                        value="priority"
+                        checked={taskParametersToDisplay.includes('priority')}
+                        onChange={handleCheckboxChange}
+                    />
+                    Отобразить приоритетность задач
+                </div>
+            </div>
+            <KanbanBoard boardType={boardType} taskParametersToDisplay={taskParametersToDisplay} />
         </div>
     );
 };

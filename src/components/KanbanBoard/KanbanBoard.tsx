@@ -23,7 +23,7 @@ import { classNames } from '@/lib';
 import cls from './KanbanBoard.module.scss';
 
 export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
-    const { boardType } = props;
+    const { boardType, taskParametersToDisplay } = props;
     const userStatusesColumns = useSelector(getUserStatuses);
     const userNamesColumns = useSelector(getUserNames);
     const activeTask = useSelector(getActiveTask);
@@ -96,6 +96,7 @@ export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
                                 key={columnName}
                                 columnName={columnName}
                                 tasks={filterTasksByColumnName(columnName)}
+                                taskParametersToDisplay={taskParametersToDisplay}
                             />
                         ))}
                 </div>
@@ -104,6 +105,7 @@ export const KanbanBoard: FC<IKanbanBoardProps> = (props) => {
                     <DragOverlay>
                         {activeTask && (
                             <TaskCard
+                                taskParametersToDisplay={taskParametersToDisplay}
                                 task={activeTask}
                             />
                         )}

@@ -9,7 +9,9 @@ import { classNames } from '@/lib';
 import cls from './ColumnContainter.module.scss';
 
 export const ColumnContainer = (props: IColumnContainerProps) => {
-    const { columnName, tasks, switchType } = props;
+    const {
+        columnName, tasks, switchType, taskParametersToDisplay,
+    } = props;
     const tasksIds: number[] = useMemo(() => tasks.map((task) => task.taskId), [tasks]);
 
     const { setNodeRef, transition, transform } = useSortable({
@@ -41,6 +43,7 @@ export const ColumnContainer = (props: IColumnContainerProps) => {
                     <SortableContext items={tasksIds}>
                         {tasks.map((task) => (
                             <TaskCard
+                                taskParametersToDisplay={taskParametersToDisplay}
                                 key={task.taskId}
                                 task={task}
                             />
