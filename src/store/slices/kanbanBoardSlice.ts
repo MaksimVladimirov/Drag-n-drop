@@ -73,6 +73,13 @@ const kanbanBoardSlice = createSlice({
             state.tasks[activeIndex].comment = comment;
         },
 
+        addTaskDeadline: (state, action:PayloadAction<{dateString:string, id: number}>) => {
+            const { dateString, id } = action.payload;
+            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
+            state.tasks[activeIndex].deadline = dateString;
+            console.log(state.tasks[activeIndex].deadline);
+        },
+
     },
 });
 
@@ -84,6 +91,7 @@ export const {
     addNewField,
     addTaskPriority,
     addTaskComment,
+    addTaskDeadline,
 } = kanbanBoardSlice.actions;
 
 export default kanbanBoardSlice.reducer;

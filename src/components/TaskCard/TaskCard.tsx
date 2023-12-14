@@ -1,15 +1,17 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChangeEvent, useState, KeyboardEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import DatePicker from 'react-date-picker';
-import { TaskParameter } from '@/components';
+import { DatePicker } from 'antd';
 import CompletedStatus from '@/assets/icons/taskStatuses/completed.svg';
 import InReviewStatus from '@/assets/icons/taskStatuses/review.svg';
 import AtWorkStatus from '@/assets/icons/taskStatuses/at_work.svg';
+import LowPriority from '@/assets/icons/taskPriorities/low.svg';
+import MediumPriority from '@/assets/icons//taskPriorities/medium.svg';
+import HighPriority from '@/assets/icons/taskPriorities/high.svg';
 import TodoStatus from '@/assets/icons/taskStatuses/todo.svg';
-import { addNewField, addTaskPriority, addTaskComment } from '@/store/slices/kanbanBoardSlice';
+import { addTaskPriority, addTaskComment, addTaskDeadline } from '@/store/slices/kanbanBoardSlice';
 import { TaskStatusesType } from '@/types/TaskStatuses';
 import CheckMark from '@/assets/icons/check-mark.svg';
 import ResetIcon from '@/assets/icons/reset.svg';
@@ -18,6 +20,7 @@ import Avatar from '@/assets/icons/avatar.svg';
 import { classNames } from '@/lib';
 
 import cls from './TaskCard.module.scss';
+import { TaskPrioritiesType } from '@/types/TaskPrioritiesType';
 
 export enum AddingTaskParameters {
     ADD_COMMENT = 'addComment',
@@ -32,18 +35,20 @@ const TaskStatusesSvgs: Record<TaskStatusesType, string> = {
     'В работе': AtWorkStatus,
 };
 
+const TaskPrioritiesSvgs: Record<TaskPrioritiesType, string> = {
+    низкая: LowPriority,
+    средняя: MediumPriority,
+    высокая: HighPriority,
+};
+
 const options = [
     { value: AddingTaskParameters.ADD_COMMENT, label: 'Добавить комментарий' },
-    { value: AddingTaskParameters.ADD_DEADLINE, label: 'Добавить время' },
+    { value: AddingTaskParameters.ADD_DEADLINE, label: 'Добавить дэдлайн' },
     { value: AddingTaskParameters.ADD_PRIORITY, label: 'Добавить приоритетность' },
 ];
 
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
 export const TaskCard = (props: ITaskCardProps) => {
-    const [value, onChange] = useState<Value>(new Date());
+    const [selectedDateTime, setSelectedDateTime] = useState(null);
     const [taskParameterFieldIsOpen, setTaskParameterFieldIsOpen] = useState<boolean>(false);
     const [comment, setComment] = useState<string>('');
     const [addingParam, setAddingParam] = useState<AddingTaskParameters | string>('');
@@ -105,13 +110,11 @@ export const TaskCard = (props: ITaskCardProps) => {
         setComment('');
     };
 
-    // const onTaskParameterFieldKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    //     if (event.key === 'Enter') {
-    //         addNewTaskParameter(task.taskId);
-    //     } else if (event.key === 'Escape') {
-    //         clearTaskParameterField();
-    //     }
-    // };
+    const handleDatePickerChange = (date: any, dateString: string) => {
+        const id = task.taskId;
+        dispatch(addTaskDeadline({ dateString, id }));
+        setAddingParam('');
+    };
 
     return (
         <div
@@ -140,16 +143,6 @@ export const TaskCard = (props: ITaskCardProps) => {
                 </div>
             )}
 
-            {task.taskPriority && (
-                <div className={classNames(cls.TaskCard__priority_field)}>
-                    {`Приоритеность ${task.taskPriority}`}
-                </div>
-            )}
-
-            {task.parameters && task.parameters?.map((parameter) => (
-                <TaskParameter key={parameter.paramId} parameterText={parameter.paramText} />
-            ))}
-
             {(addingParam === AddingTaskParameters.ADD_PRIORITY && !task.taskPriority) && (
                 <select onChange={handlePriorityChange}>
                     <option value="" disabled selected hidden>Приоритетность</option>
@@ -161,10 +154,7 @@ export const TaskCard = (props: ITaskCardProps) => {
             )}
 
             {(addingParam === AddingTaskParameters.ADD_DEADLINE && !task.deadline) && (
-                <DatePicker
-                    onChange={onChange}
-                    value={value}
-                />
+                <DatePicker size="small" showTime onChange={handleDatePickerChange} />
             )}
 
             {(addingParam === AddingTaskParameters.ADD_COMMENT && !task.comment) && (
@@ -185,6 +175,19 @@ export const TaskCard = (props: ITaskCardProps) => {
                         <img src={ResetIcon} alt="" />
                     </button>
                 </>
+            )}
+
+            {task.deadline && (
+                <div className={classNames(cls.TaskCard__priority_field)}>
+                    {`Сделать до ${task.deadline}`}
+                </div>
+            )}
+
+            {task.taskPriority && (
+                <div className={classNames(cls.TaskCard__priority_field)}>
+                    <img src={TaskPrioritiesSvgs[task.taskPriority as keyof typeof TaskPrioritiesSvgs]} alt="" />
+                    {`Приоритетность ${task.taskPriority}`}
+                </div>
             )}
 
             <button
