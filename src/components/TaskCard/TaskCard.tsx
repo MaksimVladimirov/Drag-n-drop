@@ -4,6 +4,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { ChangeEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { DatePicker } from 'antd';
+import dayjs from 'dayjs';
 import { addTaskPriority, addTaskComment, addTaskDeadline } from '@/store/slices/kanbanBoardSlice';
 import CheckMark from '@/assets/icons/check-mark.svg';
 import ResetIcon from '@/assets/icons/reset.svg';
@@ -80,8 +81,7 @@ export const TaskCard = (props: ITaskCardProps) => {
         setAddingParam('');
     };
 
-    const handleDatePickerChange = (date: any, dateString: string) => {
-        console.log(date);
+    const handleDatePickerChange = (_date: dayjs.Dayjs | null, dateString: string) => {
         const id = task.taskId;
         dispatch(addTaskDeadline({ dateString, id }));
         setAddingParam('');
