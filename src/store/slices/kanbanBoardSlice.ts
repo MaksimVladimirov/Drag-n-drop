@@ -53,7 +53,7 @@ const kanbanBoardSlice = createSlice({
             state.tasks = arrayMove(state.tasks, activeIndex, activeIndex);
         },
 
-        // Добавляем дополнительные параметры задачи
+        // Добавляем дополнительные параметры задачи (функционал не работает)
         addTaskPriority: (state, action:PayloadAction<{selectedTaskPriority:string, id: number}>) => {
             const { selectedTaskPriority, id } = action.payload;
             const activeIndex = state.tasks.findIndex((task) => task.taskId === id);

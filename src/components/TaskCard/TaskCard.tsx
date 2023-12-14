@@ -135,7 +135,7 @@ export const TaskCard = (props: ITaskCardProps) => {
             {Object.entries(taskParametersToDisplayMap).map(([param, element]) => (
                 taskParametersToDisplay.includes(param) && element))}
 
-            {/* Добавления нового параметра к задаче (функционал скрыт) */}
+            {/* Весь функционал что строчками ниже СКРЫТ и не работает */}
             {(addingParam === AddingTaskParameters.ADD_PRIORITY && !task.taskPriority) && (
                 <select onChange={handlePriorityChange}>
                     <option value="" disabled selected hidden>Приоритетность</option>
