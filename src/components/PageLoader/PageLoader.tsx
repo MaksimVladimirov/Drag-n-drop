@@ -1,11 +1,11 @@
 import { FC } from 'react';
+import { Spin } from 'antd';
 import { classNames } from '@/lib';
-import { Loader } from '@/components';
 
 import cls from './PageLoader.module.scss';
 
 export const PageLoader: FC = () => (
     <div className={classNames(cls.PageLoader)}>
-        <Loader />
+        <Spin size="large" />
     </div>
 );

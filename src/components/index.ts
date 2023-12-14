@@ -1,5 +1,4 @@
 export { TaskCard } from './TaskCard/TaskCard';
-export { Loader } from './Loader/Loader';
 export { AppLink } from './AppLink/AppLink';
 export { KanbanBoard } from './KanbanBoard/KanbanBoard';
 export { Sidebar } from './SideBar/Sidebar';
