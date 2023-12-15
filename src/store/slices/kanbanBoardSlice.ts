@@ -1,11 +1,11 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { arrayMove } from '@dnd-kit/sortable';
 import { BoardTypeEnum } from '@/types/BoardTypeEnum';
 import { taskStatuses } from '@/data/taskStatuses';
 import { tasks } from '@/data/tasks';
 
 const kanbanBoardSlice = createSlice({
-    name: 'kanban',
+    name: 'kanbanBoard',
     initialState: {
         statusColumns: taskStatuses,
         nameColumns: [...new Set(tasks.map((task) => task.userName))],
@@ -53,26 +53,6 @@ const kanbanBoardSlice = createSlice({
             state.tasks = arrayMove(state.tasks, activeIndex, activeIndex);
         },
 
-        // Добавляем дополнительные параметры задачи (функционал не работает)
-        addTaskPriority: (state, action:PayloadAction<{selectedTaskPriority:string, id: number}>) => {
-            const { selectedTaskPriority, id } = action.payload;
-            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
-            state.tasks[activeIndex].taskPriority = selectedTaskPriority;
-        },
-
-        addTaskComment: (state, action:PayloadAction<{comment:string, id: number}>) => {
-            const { comment, id } = action.payload;
-            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
-            state.tasks[activeIndex].comment = comment;
-        },
-
-        addTaskDeadline: (state, action:PayloadAction<{dateString:string, id: number}>) => {
-            const { dateString, id } = action.payload;
-            const activeIndex = state.tasks.findIndex((task) => task.taskId === id);
-            state.tasks[activeIndex].deadline = dateString;
-            console.log(state.tasks[activeIndex].deadline);
-        },
-
     },
 });
 
@@ -81,9 +61,6 @@ export const {
     setTasks,
     moveTasks,
     moveTaskToColumn,
-    addTaskPriority,
-    addTaskComment,
-    addTaskDeadline,
 } = kanbanBoardSlice.actions;
 
 export default kanbanBoardSlice.reducer;

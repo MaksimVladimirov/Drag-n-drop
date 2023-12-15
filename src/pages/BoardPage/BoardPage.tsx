@@ -30,9 +30,10 @@ const BoardPage = () => {
                 <option value="switchingBetweenStatuses">Переключение между статусами</option>
             </select>
 
-            <div className={classNames(cls.BoardPage_checkboxGroup)}>
-                <div>
+            <div className={classNames(cls.BoardPage_additional_params)}>
+                <div className={classNames(cls.BoardPage_additional_params_block)}>
                     <input
+                        className={classNames(cls.BoardPage_additional_params_block__checkbox)}
                         type="checkbox"
                         value="comments"
                         checked={taskParametersToDisplay.includes('comments')}
@@ -40,8 +41,9 @@ const BoardPage = () => {
                     />
                     Отобразить комментарии задач
                 </div>
-                <div>
+                <div className={classNames(cls.BoardPage_additional_params_block)}>
                     <input
+                        className={classNames(cls.BoardPage_additional_params_block__checkbox)}
                         type="checkbox"
                         value="deadlines"
                         checked={taskParametersToDisplay.includes('deadlines')}
@@ -49,8 +51,9 @@ const BoardPage = () => {
                     />
                     Отобразить сроки выполнения задач
                 </div>
-                <div>
+                <div className={classNames(cls.BoardPage_additional_params_block)}>
                     <input
+                        className={classNames(cls.BoardPage_additional_params_block__checkbox)}
                         type="checkbox"
                         value="priority"
                         checked={taskParametersToDisplay.includes('priority')}

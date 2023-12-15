@@ -9,5 +9,16 @@
         border-radius: var(--border-radius);
         width: min-content;
     }
-    
+    &_additional_params {
+        margin-top: 10px;
+        &_block {
+            margin-top: 3px;
+            white-space: nowrap;
+            &__checkbox {
+                width: 17px;
+                height: 17px;
+                margin-right: 5px;
+            }
+        }
+    }
 }

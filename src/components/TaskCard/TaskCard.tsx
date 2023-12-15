@@ -1,33 +1,15 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { ChangeEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
-import { addTaskPriority, addTaskComment, addTaskDeadline } from '@/store/slices/kanbanBoardSlice';
-import CheckMark from '@/assets/icons/check-mark.svg';
-import ResetIcon from '@/assets/icons/reset.svg';
 import { ITaskCardProps } from './TaskCardProps';
 import Avatar from '@/assets/icons/avatar.svg';
 import { classNames } from '@/lib';
-import { AddingTaskParameters } from '@/types/AddingTaskParametersEnum';
 import { TaskStatusesSvgs } from './taskObjects/TaskStatusesSvgs';
 import { TaskPrioritiesSvgs } from './taskObjects/TaskPrioritiesSvgs';
 
 import cls from './TaskCard.module.scss';
 
-const options = [
-    { value: AddingTaskParameters.ADD_COMMENT, label: 'Добавить комментарий' },
-    { value: AddingTaskParameters.ADD_DEADLINE, label: 'Добавить дэдлайн' },
-    { value: AddingTaskParameters.ADD_PRIORITY, label: 'Добавить приоритетность' },
-];
-
 export const TaskCard = (props: ITaskCardProps) => {
-    const [taskParameterFieldIsOpen, setTaskParameterFieldIsOpen] = useState<boolean>(false);
-    const [comment, setComment] = useState<string>('');
-    const [addingParam, setAddingParam] = useState<AddingTaskParameters | string>('');
-    const dispatch = useDispatch();
     const { task, taskParametersToDisplay } = props;
     const {
         setNodeRef, attributes, listeners, isDragging, transition, transform,
@@ -56,40 +38,6 @@ export const TaskCard = (props: ITaskCardProps) => {
             />
         );
     }
-    const showTaskParametersSelect = () => {
-        setComment('');
-        setAddingParam('');
-        setTaskParameterFieldIsOpen((prev) => !prev);
-    };
-
-    const addNewTaskParameter = (selectedAddingParam: AddingTaskParameters) => {
-        setTaskParameterFieldIsOpen((prev) => !prev);
-        setAddingParam(selectedAddingParam);
-    };
-
-    const handlePriorityChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        const selectedTaskPriority = event.target.value;
-        const id = task.taskId;
-        dispatch(addTaskPriority({ selectedTaskPriority, id }));
-        setAddingParam('');
-    };
-
-    const handleCommentChange = () => {
-        const id = task.taskId;
-        dispatch(addTaskComment({ comment, id }));
-        setAddingParam('');
-    };
-
-    const handleDatePickerChange = (_date: dayjs.Dayjs | null, dateString: string) => {
-        const id = task.taskId;
-        console.log(dateString);
-        dispatch(addTaskDeadline({ dateString, id }));
-        setAddingParam('');
-    };
-
-    const clearTaskParameterField = () => {
-        setComment('');
-    };
 
     const taskParametersToDisplayMap = {
         deadlines: (
@@ -135,80 +83,6 @@ export const TaskCard = (props: ITaskCardProps) => {
             {Object.entries(taskParametersToDisplayMap).map(([param, element]) => (
                 taskParametersToDisplay.includes(param) && element))}
 
-            {/* Весь функционал что строчками ниже СКРЫТ и не работает */}
-            {(addingParam === AddingTaskParameters.ADD_PRIORITY && !task.taskPriority) && (
-                <select onChange={handlePriorityChange}>
-                    <option value="" disabled selected hidden>Приоритетность</option>
-                    <option value="низкая">Низкая</option>
-                    <option value="средняя">Средняя</option>
-                    <option value="высокая">Высокая</option>
-
-                </select>
-            )}
-
-            {(addingParam === AddingTaskParameters.ADD_DEADLINE && !task.deadline) && (
-                <DatePicker size="small" onChange={handleDatePickerChange} />
-            )}
-
-            {(addingParam === AddingTaskParameters.ADD_COMMENT && !task.comment) && (
-                <>
-                    <input
-                        type="text"
-                        value={comment}
-                        onChange={(event: ChangeEvent<HTMLInputElement>) => (
-                            setComment(event.target.value))}
-                    />
-                    <button
-                        onClick={handleCommentChange}
-                        type="button"
-                    >
-                        <img src={CheckMark} alt="" />
-                    </button>
-                    <button onClick={clearTaskParameterField} type="button">
-                        <img src={ResetIcon} alt="" />
-                    </button>
-                </>
-            )}
-
-            {/* Сроки выполнения */}
-            {/* {task.deadline && (
-                <div className={classNames(cls.TaskCard__deadline_field)}>
-                    {`Сделать до ${task.deadline}`}
-                </div>
-            )} */}
-
-            {/* Приоритетность задачи */}
-            {/* {task.taskPriority && (
-                <div className={classNames(cls.TaskCard__priority_field)}>
-                    <img src={TaskPrioritiesSvgs[task.taskPriority as keyof typeof TaskPrioritiesSvgs]} alt="" />
-                    {`Приоритетность ${task.taskPriority}`}
-                </div>
-            )} */}
-
-            {/* Пока кнопка не нужна opcity 0 */}
-            <button
-                type="button"
-                onClick={showTaskParametersSelect}
-                className={classNames(cls.TaskCard__show_parameters)}
-            >
-                +
-            </button>
-
-            {/* Список параметров для добавления */}
-            {taskParameterFieldIsOpen && (
-                <div className={classNames(cls.TaskCard__parameters_option)}>
-                    {options.map((option) => (
-                        <button
-                            type="button"
-                            onClick={() => addNewTaskParameter(option.value)}
-                            className={classNames(cls.TaskCard__parameters_option__select)}
-                        >
-                            {option.label}
-
-                        </button>
-                    ))}
-                </div>
-            )}
         </div>
     );
 };
